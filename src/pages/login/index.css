@@ -1,0 +1,84 @@
+.login-page {
+    width: 400px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 8px 20px 0 #c7c7c9;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 520px;
+    box-sizing: border-box;
+    padding: 40px;
+    text-align: center;
+
+    .title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 25px;
+    }
+
+    .des {
+        color: #b8b8b8;
+    }
+
+    .google-btn {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        margin: 0 auto 20px;
+        font-size: 16px;
+        width: 320px;
+        height: 52px;
+    }
+
+    .google-txt {
+        font-size: 16px;
+        color: rgb(45, 51, 58);
+    }
+
+    .google-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 16px;
+        background-size: 722% 638%;
+        background-image: url(../../static/images/google.png);
+        background-position: 83% 5%;
+    }
+
+    .office-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 16px;
+        background-size: 100% 100%;
+        background-image: url(../../static/images/office.png);
+        background-position: 0 0;
+    }
+
+    .login-form {
+        width: 100%;
+        font-size: 16px;
+
+        .ant-form-item {
+            width: 320px;
+        }
+
+        input {
+            width: 320px;
+            height: 42px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 320px;
+            height: 52px;
+            font-size: 16px;
+        }
+    }
+
+    .login-form-button {
+        width: 100%;
+    }
+}
