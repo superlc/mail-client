@@ -1,0 +1,55 @@
+.email-list {
+    
+}
+.email-item {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f8f8f8;
+    }
+
+    &-avatar {
+        padding-right: 8px;
+    }
+
+    &-detail {
+        flex: 1;
+
+        &-sender {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            margin-bottom: 5px;
+
+            &-name {
+                flex: 1;
+                font-size: 14px;
+                line-height: 22px;
+                color: rgba(0,0,0,0.9);
+            }
+        }
+
+        &-extra {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            line-height: 20px;
+            color: rgba(0,0,0,0.6);
+
+            &-type {
+                flex: 1;
+                max-width: 10em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+
+    &:last-of-type {
+        border-bottom: none;
+    }
+}

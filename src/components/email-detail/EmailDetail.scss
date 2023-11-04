@@ -1,0 +1,58 @@
+$headerHeight: 84px;
+
+.email-detail {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+
+    &-header {
+        height: $headerHeight;
+
+        &-subject {
+            font-size: 32px;
+            color: rgba(0,0,0,0.9);
+            font-weight: 500;
+            line-height: 40px;
+        }
+
+        &-summary {
+            display: flex;
+
+            &-account {
+                flex:  1;
+                padding-left: 10px;
+                padding-right: 10px;
+
+                &-sender {
+                    line-height: 24px;
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: rgba(0,0,0,0.9);
+                }
+
+                &-receiver {
+                    line-height: 22px;
+                    font-size: 14px;
+                    color: rgba(0,0,0,0.6);
+
+                    > span {
+                        color: rgba(0,0,0,0.9);
+                        margin-right: 5px;
+                    }
+                }
+            }
+
+            &-date {
+                line-height: 24px;
+                font-size: 14px;
+                color: rgba(0,0,0,0.6);
+            }
+        }
+    }
+
+    &-body {
+        height: calc(100% - $headerHeight);
+        flex: 1;
+        overflow: auto;
+    }
+}

@@ -1,0 +1,49 @@
+import { Avatar } from "antd";
+import { EmailType } from "../../types";
+import { useState } from "react";
+
+import "./EmailDetail.scss";
+import { randomRgb } from "../../utils/random";
+
+export default function EmailDetail({
+  attachments,
+  created_at,
+  message_body,
+  receiver,
+  sender,
+  send_time,
+  subject,
+  updated_at,
+}: EmailType) {
+  const [emailContent] = useState(
+    URL.createObjectURL(new Blob([message_body], { type: "text/html" }))
+  );
+  return (
+    <div className="email-detail">
+      <div className="email-detail-header">
+        <div className="email-detail-header-subject">{subject}</div>
+        <div className="email-detail-header-summary">
+          <Avatar size={48} style={{ backgroundColor: `${randomRgb()}` }}>
+            {sender[0].toUpperCase()}
+          </Avatar>
+          <div className="email-detail-header-summary-account">
+            <div className="email-detail-header-summary-account-sender">
+              {sender}
+            </div>
+            <div className="email-detail-header-summary-account-receiver">
+              <span>收件人: </span>
+              {receiver}
+            </div>
+          </div>
+          <div className="email-detail-header-summary-date">{send_time}</div>
+        </div>
+      </div>
+      <div className="email-detail-body">
+        <iframe
+          src={emailContent}
+          style={{ border: "none", width: "100%" }}
+        ></iframe>
+      </div>
+    </div>
+  );
+}
