@@ -31,6 +31,13 @@ $headerHeight: 64px;
         display: flex;
         flex-direction: column;
         height: 100%;
+        position: relative;
+
+        &-loading {
+            background-color: #f8f8f8;
+            padding: 5px 0;
+            text-align: center;
+        }
 
         &-header {
             display: flex;

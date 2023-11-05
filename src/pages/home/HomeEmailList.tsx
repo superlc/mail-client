@@ -4,16 +4,7 @@ import { FilterOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
 import { getEmails } from "../../app/apis";
 import { useAppSelector } from "../../app/hooks";
-import {
-  Drawer,
-  Input,
-  Tooltip,
-  message,
-  Form,
-  Segmented,
-  Button,
-  Select,
-} from "antd";
+import { Input, message, Select } from "antd";
 import { EmailType, OperationType } from "../../types";
 import { useEmailDispatch } from "./HomeProvider";
 
@@ -22,7 +13,7 @@ export default function HomeEmailList() {
   const pageSize = useRef(20);
 
   const userInfo = useAppSelector((state) => state.user.data);
-  const [emails, setEmails] = useState<EmailType[]>([]);
+  const [emails, setEmails] = useState<EmailType[] | null>(null);
   const [totalCount, setTotalCount] = useState<number>(0);
   const dispatchEmailDetail = useEmailDispatch();
 
@@ -30,7 +21,32 @@ export default function HomeEmailList() {
   const [operationType, setOperationType] = useState<OperationType>("receiver");
 
   const onSearch = (val: string) => {
-    console.log(val);
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+
+    getEmails({
+      operation: operationType,
+      value: val,
+      pageSize: pageSize.current,
+      pageNumber: 1,
+    })
+      .then((res) => {
+        pageNumber.current = 1;
+        setEmails(res.emails);
+        setTotalCount(res.total_count);
+
+        if (res.emails.length > 0) {
+          dispatchEmailDetail!({ type: "set", payload: res.emails[0] });
+        }
+      })
+      .catch((err) => {
+        message.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -92,10 +108,16 @@ export default function HomeEmailList() {
           <Input.Search
             placeholder="input search text"
             onSearch={onSearch}
+            loading={loading}
             enterButton
           />
         </div>
-        <EmailList list={emails} />
+        {loading && (
+          <div className="home-email-list-loading">
+            <LoadingOutlined color="#fff" />
+          </div>
+        )}
+        <EmailList list={emails || []} />
       </div>
     </>
   );
