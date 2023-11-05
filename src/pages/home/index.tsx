@@ -6,13 +6,16 @@ import HomeEmailDetail from "./HomeEmailDetail";
 import HomeEmailList from "./HomeEmailList";
 import { EmailProvider } from "./HomeProvider";
 import { useAppSelector } from "../../app/hooks";
+import PageHeader from "../../components/header/Header";
 
 export default function Home() {
   const userInfo = useAppSelector((state) => state.user.data);
   return (
     <EmailProvider>
       <div className="home-page">
-        <div className="home-header">header</div>
+        <div className="home-header">
+          <PageHeader />
+        </div>
         <div className="home-body">
           <div className="home-aside">
             <HomeEmailList />

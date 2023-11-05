@@ -9,10 +9,10 @@ $headerHeight: 64px;
         flex-direction: column;
     }
 
-    &-header {
-        height: $headerHeight;
-        border-bottom: 1px solid $borderColor;
-    }
+    // &-header {
+    //     height: $headerHeight;
+    //     border-bottom: 1px solid $borderColor;
+    // }
 
     &-body {
         flex: 1;
