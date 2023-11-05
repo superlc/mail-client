@@ -9,8 +9,8 @@ import { EmailType, OperationType } from "../../types";
 import { useEmailDispatch } from "./HomeProvider";
 
 export default function HomeEmailList() {
-  const pageNumber = useRef(1);
-  const pageSize = useRef(20);
+  const pageNumber = useRef(0);
+  const pageSize = useRef(10);
 
   const userInfo = useAppSelector((state) => state.user.data);
   const [emails, setEmails] = useState<EmailType[] | null>(null);
@@ -18,22 +18,44 @@ export default function HomeEmailList() {
   const dispatchEmailDetail = useEmailDispatch();
 
   const [loading, setLoading] = useState(false);
+
   const [operationType, setOperationType] = useState<OperationType>("receiver");
+  const [operationValue, setOperationValue] = useState<string>(
+    userInfo?.email ?? ""
+  );
+
+  const fetchEmails = () => {
+    console.log("--------- fetch more emails ----------");
+    getEmails({
+      operation: operationType,
+      value: operationValue,
+      limit: pageSize.current,
+      offset: pageNumber.current + 1,
+    }).then((res) => {
+      setEmails((currentEmails) => [
+        ...(currentEmails || []),
+        ...(res.emails || []),
+      ]);
+      if (res.emails.length > 0) {
+        pageNumber.current += 1;
+      }
+    });
+  };
 
   const onSearch = (val: string) => {
     if (loading) {
       return;
     }
     setLoading(true);
+    pageNumber.current = 0;
 
     getEmails({
       operation: operationType,
       value: val,
-      pageSize: pageSize.current,
-      pageNumber: 1,
+      limit: pageSize.current,
+      offset: pageNumber.current,
     })
       .then((res) => {
-        pageNumber.current = 1;
         setEmails(res.emails);
         setTotalCount(res.total_count);
 
@@ -53,8 +75,8 @@ export default function HomeEmailList() {
     getEmails({
       operation: "receiver",
       value: userInfo?.email || "",
-      pageSize: pageSize.current,
-      pageNumber: pageNumber.current,
+      limit: pageSize.current,
+      offset: pageNumber.current,
     })
       .then((res) => {
         // add the page number after searching page data
@@ -70,20 +92,13 @@ export default function HomeEmailList() {
       .catch((err) => {
         message.error(err);
       });
+
+    return () => {
+      pageNumber.current = 0;
+    };
   }, []);
 
   return (
-    // <InfiniteScroll
-    //   dataLength={0}
-    //   next={fetchMore}
-    //   loader={
-    //     <div className="emails-list-loading-more">
-    //       <LoadingOutlined /> Loading...
-    //     </div>
-    //   }
-    // >
-    //   <EmailList list={[]} />
-    // </InfiniteScroll>
     <>
       <div className="home-email-list">
         <div className="home-email-list-header">
@@ -112,12 +127,25 @@ export default function HomeEmailList() {
             enterButton
           />
         </div>
-        {loading && (
-          <div className="home-email-list-loading">
-            <LoadingOutlined color="#fff" />
-          </div>
-        )}
-        <EmailList list={emails || []} />
+        <div
+          id="scrollContainer"
+          className="home-email-list-wrapper"
+          style={{ height: 300, overflow: "auto" }}
+        >
+          <InfiniteScroll
+            dataLength={emails?.length ?? 0}
+            next={fetchEmails}
+            loader={
+              <div className="email-list-loading-more">
+                <LoadingOutlined />
+              </div>
+            }
+            scrollableTarget="scrollContainer"
+            hasMore={(emails ?? [])?.length < totalCount}
+          >
+            <EmailList list={emails || []} />
+          </InfiniteScroll>
+        </div>
       </div>
     </>
   );

@@ -4,8 +4,8 @@ import request from '../utils/request';
 export interface GetEmailsParams {
     operation: OperationType;
     value: string;
-    pageNumber: number;
-    pageSize: number;
+    offset: number;
+    limit: number;
 }
 
 export const getEmails = (params: GetEmailsParams) => {
@@ -15,8 +15,8 @@ export const getEmails = (params: GetEmailsParams) => {
     const query = {
         operation: params.operation ?? 'receiver',
         value: params.value,
-        offset: params.pageNumber - 1,
-        limit: params.pageSize,
+        offset: params.offset,
+        limit: params.limit,
     };
 
     return request<any, { emails: EmailType[], total_count: number }>({

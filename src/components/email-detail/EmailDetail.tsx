@@ -38,7 +38,7 @@ export default function EmailDetail({
               {sender}
             </div>
             <div className="email-detail-header-summary-account-receiver">
-              <span>收件人: </span>
+              <span>To: </span>
               {receiver}
             </div>
           </div>

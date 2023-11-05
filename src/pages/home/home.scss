@@ -47,9 +47,18 @@ $headerHeight: 64px;
             text-align: right;
             padding: 10px;
 
+            .ant-select {
+                min-width: 8em;
+            }
+
             .ant-input-search {
                 margin-left: 10px;
             }
+        }
+
+        &-wrapper {
+            overflow-x: hidden;
+            overflow-y: auto;
         }
     }
 

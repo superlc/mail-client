@@ -43,6 +43,7 @@ export default function Login() {
 
   const onFinish = (form: any) => {
     const { email, password } = form;
+    setLogining(true);
     login({ email, password })
       .then(({ token }) => {
         loginWithToken(token);

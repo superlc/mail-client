@@ -7,6 +7,7 @@ import HomeEmailList from "./HomeEmailList";
 import { EmailProvider } from "./HomeProvider";
 import { useAppSelector } from "../../app/hooks";
 import PageHeader from "../../components/header/Header";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export default function Home() {
   const userInfo = useAppSelector((state) => state.user.data);
