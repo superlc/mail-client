@@ -3,7 +3,7 @@ import { EmailType } from "../../types";
 import { useState } from "react";
 
 import "./EmailDetail.scss";
-import { randomRgb } from "../../utils/random";
+import { hashAvatarBgColor, randomRgb } from "../../utils/random";
 
 export default function EmailDetail({
   attachments,
@@ -20,13 +20,18 @@ export default function EmailDetail({
     URL.createObjectURL(new Blob([message_body], { type: "text/html" }))
   );
 
+  const avatarChar = sender[0].toUpperCase();
+
   return (
     <div className="email-detail">
       <div className="email-detail-header">
         <div className="email-detail-header-subject">{subject}</div>
         <div className="email-detail-header-summary">
-          <Avatar size={48} style={{ backgroundColor: `${randomRgb()}` }}>
-            {sender[0].toUpperCase()}
+          <Avatar
+            size={48}
+            style={{ backgroundColor: `${hashAvatarBgColor(avatarChar)}` }}
+          >
+            {avatarChar}
           </Avatar>
           <div className="email-detail-header-summary-account">
             <div className="email-detail-header-summary-account-sender">

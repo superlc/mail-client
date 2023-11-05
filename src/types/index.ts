@@ -8,6 +8,7 @@ export interface AttachmentType {
 export type OperationType = 'text' | 'domain' | 'receiver';
 
 export interface EmailType {
+    id: number;
     attachments: AttachmentType[],
     created_at: string;
     message_body: string;

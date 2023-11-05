@@ -57,4 +57,10 @@
     &:last-of-type {
         border-bottom: none;
     }
+
+    &.active {
+        background-color: #009CFC;
+        cursor: default;
+        pointer-events: none;
+    }
 }
