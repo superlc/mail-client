@@ -7,8 +7,8 @@ interface PrivateRouteProps {
 }
 
 export default function PrivateRoute({ children }: PrivateRouteProps) {
-  // const token = useAppSelector((state) => state.token.token);
-  const token = "123";
+  const token = useAppSelector((state) => state.token.token);
+  // const token = "123";
 
   const { pathname } = useLocation();
   return token ? (

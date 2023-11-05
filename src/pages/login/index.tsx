@@ -1,4 +1,4 @@
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Navigate, useSearchParams } from "react-router-dom";
 import { setToken } from "../../features/token/tokenSlice";
@@ -6,21 +6,46 @@ import { setToken } from "../../features/token/tokenSlice";
 import "./index.css";
 import { useAppDispatch } from "../../app/hooks";
 import { AppDispatch } from "../../app/store";
+import { getUserInfo, login } from "../../app/apis";
+import { setUserInfo } from "../../features/user/userSlice";
 
 const googleLoginPath = process.env.REACT_APP_GOOG_LOGIN_PATH;
 const officeLoginPath = "";
 
 export default function Login() {
-  const onFinish = () => {};
-
   const dispath: AppDispatch = useAppDispatch();
   const [searchParasm] = useSearchParams();
   const token = searchParasm.get("token");
 
-  if (token) {
+  const loginWithToken = (token: string) => {
     dispath(setToken(token));
-    return <Navigate to="/" />;
+    // 获取用户信息后再跳转
+    getUserInfo()
+      .then((userInfo) => {
+        dispath(setUserInfo(userInfo));
+        return <Navigate to="/" />;
+      })
+      .catch((err) => {
+        console.error(err);
+        message.error(JSON.stringify(err));
+      });
+  };
+
+  if (token) {
+    loginWithToken(token);
   }
+
+  const onFinish = (form: any) => {
+    const { email, password } = form;
+    login({ email, password })
+      .then(({ token }) => {
+        loginWithToken(token);
+      })
+      .catch((err) => {
+        console.error(err);
+        message.error(JSON.stringify(err));
+      });
+  };
 
   return (
     <div className="login-page">

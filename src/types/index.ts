@@ -1,9 +1,11 @@
 export interface AttachmentType {
-    content_type: string;
     id: number;
+    content_type: string;
     name: string;
     size: number;
 }
+
+export type OperationType = 'text' | 'domain' | 'receiver';
 
 export interface EmailType {
     attachments: AttachmentType[],
@@ -14,4 +16,24 @@ export interface EmailType {
     sender: string;
     subject: string;
     updated_at: string;
-} 
+}
+
+export type ProviderType = 'GOOG' | 'MSFT';
+export interface UserType {
+    id: number;
+    admin: boolean;
+    email: string;
+    provider: string;
+    scan: boolean;
+}
+
+export type SecureLevelType = 'TRASH' | 'DELETE';
+
+export interface RuleType {
+    id: number;
+    email: string;
+    operation: OperationType;
+    secure_level: SecureLevelType;
+    value: string;
+    created_at: string;
+}
