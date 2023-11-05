@@ -21,13 +21,29 @@ $headerHeight: 64px;
     }
 
     &-aside {
-        width: 320px;
         box-sizing: border-box;
         border-right: 1px solid $borderColor;
-        padding-top: 20px;
-        padding-bottom: 20px;
         height: 100%;
         overflow: auto;
+    }
+
+    &-email-list {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        &-header {
+            display: flex;
+            align-items: center;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #ddd;
+            text-align: right;
+            padding: 10px;
+
+            .ant-input-search {
+                margin-left: 10px;
+            }
+        }
     }
 
     &-main {

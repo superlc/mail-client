@@ -9,7 +9,6 @@ import { useAppSelector } from "../../app/hooks";
 
 export default function Home() {
   const userInfo = useAppSelector((state) => state.user.data);
-  console.log(userInfo);
   return (
     <EmailProvider>
       <div className="home-page">

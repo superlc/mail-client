@@ -15,9 +15,11 @@ export default function EmailDetail({
   subject,
   updated_at,
 }: EmailType) {
+  console.log(message_body);
   const [emailContent] = useState(
     URL.createObjectURL(new Blob([message_body], { type: "text/html" }))
   );
+
   return (
     <div className="email-detail">
       <div className="email-detail-header">
@@ -40,8 +42,10 @@ export default function EmailDetail({
       </div>
       <div className="email-detail-body">
         <iframe
+          id="email-render"
           src={emailContent}
-          style={{ border: "none", width: "100%" }}
+          frameBorder={0}
+          style={{ border: "none", width: "100%", height: "calc(100% - 24px)" }}
         ></iframe>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Navigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { setToken } from "../../features/token/tokenSlice";
 
 import "./index.css";
@@ -8,14 +8,18 @@ import { useAppDispatch } from "../../app/hooks";
 import { AppDispatch } from "../../app/store";
 import { getUserInfo, login } from "../../app/apis";
 import { setUserInfo } from "../../features/user/userSlice";
+import { useState } from "react";
 
 const googleLoginPath = process.env.REACT_APP_GOOG_LOGIN_PATH;
 const officeLoginPath = "";
 
 export default function Login() {
   const dispath: AppDispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [searchParasm] = useSearchParams();
   const token = searchParasm.get("token");
+
+  const [logining, setLogining] = useState(false);
 
   const loginWithToken = (token: string) => {
     dispath(setToken(token));
@@ -23,10 +27,12 @@ export default function Login() {
     getUserInfo()
       .then((userInfo) => {
         dispath(setUserInfo(userInfo));
-        return <Navigate to="/" />;
+        setLogining(false);
+        navigate("/", { replace: true });
       })
       .catch((err) => {
         console.error(err);
+        setLogining(false);
         message.error(JSON.stringify(err));
       });
   };
@@ -43,6 +49,7 @@ export default function Login() {
       })
       .catch((err) => {
         console.error(err);
+        setLogining(false);
         message.error(JSON.stringify(err));
       });
   };
@@ -94,6 +101,7 @@ export default function Login() {
             type="primary"
             htmlType="submit"
             className="login-form-button"
+            loading={logining}
           >
             Continue
           </Button>

@@ -4,19 +4,25 @@ import request from '../utils/request';
 export interface GetEmailsParams {
     operation: OperationType;
     value: string;
+    pageNumber: number;
+    pageSize: number;
 }
 
 export const getEmails = (params: GetEmailsParams) => {
     if (!params.value) {
         return Promise.reject('Api::getEmails param value should not be empty!');
     }
-    const query = { operation: params.operation ?? 'EMAIL', value: params.value };
-    return request<any, EmailType[]>({
+    const query = {
+        operation: params.operation ?? 'receiver',
+        value: params.value,
+        offset: params.pageNumber - 1,
+        limit: params.pageSize,
+    };
+
+    return request<any, { emails: EmailType[], total_count: number }>({
         url: 'emails',
         method: 'get',
-        data: {
-            query,
-        },
+        params: query,
     });
 }
 

@@ -1,5 +1,6 @@
 .email-list {
-    
+    width: 360px;
+    overflow: auto;
 }
 .email-item {
     display: flex;
@@ -17,6 +18,7 @@
 
     &-detail {
         flex: 1;
+        overflow: hidden;
 
         &-sender {
             display: flex;
@@ -29,6 +31,9 @@
                 font-size: 14px;
                 line-height: 22px;
                 color: rgba(0,0,0,0.9);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
 

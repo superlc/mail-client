@@ -11,6 +11,7 @@ const EmailContext = createContext<EmailType | null>(null);
 const DispatchEmailContext = createContext<Dispatch<any> | null>(null);
 
 export const useEmailContext = () => useContext(EmailContext);
+export const useEmailDispatch = () => useContext(DispatchEmailContext);
 
 export interface EmailActionType {
   type: "set" | "reset";

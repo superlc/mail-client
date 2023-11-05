@@ -4,15 +4,19 @@ $headerHeight: 84px;
     display: flex;
     height: 100%;
     flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
 
     &-header {
-        height: $headerHeight;
+        min-height: $headerHeight;
+        padding-bottom: 10px;
 
         &-subject {
             font-size: 32px;
             color: rgba(0,0,0,0.9);
             font-weight: 500;
             line-height: 40px;
+            margin-bottom: 10px;
         }
 
         &-summary {
@@ -51,7 +55,7 @@ $headerHeight: 84px;
     }
 
     &-body {
-        height: calc(100% - $headerHeight);
+        // height: calc(100% - $headerHeight);
         flex: 1;
         overflow: auto;
     }
