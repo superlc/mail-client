@@ -15,10 +15,11 @@ export default function EmailDetail({
   subject,
   updated_at,
 }: EmailType) {
-  console.log(message_body);
-  const [emailContent] = useState(
-    URL.createObjectURL(new Blob([message_body], { type: "text/html" }))
-  );
+  // const [emailContent] = useState(
+  //   URL.createObjectURL(new Blob([message_body], { type: "text/html" }))
+  // );
+
+  // console.log(message_body, emailContent);
 
   const avatarChar = sender[0].toUpperCase();
 
@@ -48,7 +49,9 @@ export default function EmailDetail({
       <div className="email-detail-body">
         <iframe
           id="email-render"
-          src={emailContent}
+          src={URL.createObjectURL(
+            new Blob([message_body], { type: "text/html" })
+          )}
           frameBorder={0}
           style={{ border: "none", width: "100%", height: "calc(100% - 24px)" }}
         ></iframe>

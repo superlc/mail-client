@@ -56,9 +56,13 @@ $headerHeight: 64px;
             }
         }
 
+        &-body {
+            flex: 1;
+        }
+
         &-wrapper {
-            overflow-x: hidden;
-            overflow-y: auto;
+            // overflow-x: hidden;
+            // overflow-y: auto;
         }
     }
 

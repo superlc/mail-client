@@ -1,6 +1,4 @@
-import InfiniteScroll from "react-infinite-scroll-component";
 import EmailList from "../../components/email-list/EmailList";
-import { FilterOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
 import { getEmails } from "../../app/apis";
 import { useAppSelector } from "../../app/hooks";
@@ -18,29 +16,12 @@ export default function HomeEmailList() {
   const dispatchEmailDetail = useEmailDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const [operationType, setOperationType] = useState<OperationType>("receiver");
   const [operationValue, setOperationValue] = useState<string>(
     userInfo?.email ?? ""
   );
-
-  const fetchEmails = () => {
-    console.log("--------- fetch more emails ----------");
-    getEmails({
-      operation: operationType,
-      value: operationValue,
-      limit: pageSize.current,
-      offset: pageNumber.current + 1,
-    }).then((res) => {
-      setEmails((currentEmails) => [
-        ...(currentEmails || []),
-        ...(res.emails || []),
-      ]);
-      if (res.emails.length > 0) {
-        pageNumber.current += 1;
-      }
-    });
-  };
 
   const onSearch = (val: string) => {
     if (loading) {
@@ -127,24 +108,38 @@ export default function HomeEmailList() {
             enterButton
           />
         </div>
-        <div
-          id="scrollContainer"
-          className="home-email-list-wrapper"
-          style={{ height: 300, overflow: "auto" }}
-        >
-          <InfiniteScroll
-            dataLength={emails?.length ?? 0}
-            next={fetchEmails}
-            loader={
-              <div className="email-list-loading-more">
-                <LoadingOutlined />
-              </div>
-            }
-            scrollableTarget="scrollContainer"
-            hasMore={(emails ?? [])?.length < totalCount}
-          >
-            <EmailList list={emails || []} />
-          </InfiniteScroll>
+        <div className="home-email-list-body">
+          <EmailList
+            list={emails || []}
+            loading={loadingMore}
+            onRangeChange={async (_, end) => {
+              console.log(
+                "------",
+                pageNumber.current,
+                pageNumber.current * pageSize.current,
+                emails?.length,
+                totalCount
+              );
+              if (
+                end + 5 > pageNumber.current * pageSize.current &&
+                (emails?.length ?? 0) < totalCount
+              ) {
+                setLoadingMore(true);
+                const { emails: moreEmails } = await getEmails({
+                  operation: operationType,
+                  value: operationValue,
+                  limit: pageSize.current,
+                  offset: pageNumber.current + 1,
+                });
+                pageNumber.current += 1;
+                setLoadingMore(false);
+                setEmails((preEmails) => [
+                  ...(preEmails ?? []),
+                  ...(moreEmails ?? []),
+                ]);
+              }
+            }}
+          />
         </div>
       </div>
     </>
