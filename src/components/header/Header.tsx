@@ -20,8 +20,9 @@ export default function PageHeader({
   return (
     <div className="page-header">
       <div className="page-header-navs">
-        {navs.map((nav) => (
+        {navs.map((nav, index) => (
           <a
+            key={index}
             className={classNames("page-header-nav", {
               active: current === nav,
             })}

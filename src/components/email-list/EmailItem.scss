@@ -5,7 +5,7 @@
 .email-item {
     display: flex;
     border-bottom: 1px solid #ddd;
-    padding: 10px 20px;
+    align-items: center;
     cursor: pointer;
 
     &:hover {
@@ -14,6 +14,8 @@
 
     &-avatar {
         padding-right: 8px;
+        padding-left: 20px;
+        margin-top: -28px;
     }
 
     &-detail {

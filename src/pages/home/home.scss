@@ -30,7 +30,7 @@ $headerHeight: 64px;
     &-email-list {
         display: flex;
         flex-direction: column;
-        height: 100%;
+        // height: 100%;
         position: relative;
 
         &-loading {
@@ -57,12 +57,15 @@ $headerHeight: 64px;
         }
 
         &-body {
-            flex: 1;
+            // flex: 1;
+            // overflow: auto;
+            height: calc(100% - 53px);
+            overflow: auto;
         }
 
         &-wrapper {
-            // overflow-x: hidden;
-            // overflow-y: auto;
+            height: 100%;
+            // overflow: hidden;
         }
     }
 
