@@ -13,6 +13,8 @@ const pageSize = 10;
 
 export default function HomeEmailList() {
   const pageNumber = useRef(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerHeight, setContainerHeight] = useState(0);
 
   const userInfo = useAppSelector((state) => state.user.data);
   const [emails, setEmails] = useState<EmailType[] | null>(null);
@@ -83,7 +85,12 @@ export default function HomeEmailList() {
     };
   }, [userInfo]);
 
-  console.log("has next page:", (emails?.length ?? 0) < totalCount);
+  useLayoutEffect(() => {
+    if (containerRef.current) {
+      const boundingRect = containerRef.current.getBoundingClientRect();
+      setContainerHeight(boundingRect.height);
+    }
+  }, []);
 
   return (
     <>
@@ -114,9 +121,10 @@ export default function HomeEmailList() {
             enterButton
           />
         </div>
-        <div className="home-email-list-body">
+        <div className="home-email-list-body" ref={containerRef}>
           {!!emails && (
             <InfiniteLoaderWrapper
+              height={containerHeight}
               hasNextPage={emails.length < totalCount}
               isNextPageLoading={loadingMore}
               items={emails}

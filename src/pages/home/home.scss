@@ -30,8 +30,7 @@ $headerHeight: 64px;
     &-email-list {
         display: flex;
         flex-direction: column;
-        // height: 100%;
-        position: relative;
+        height: 100%;
 
         &-loading-more {
             height: 100%;

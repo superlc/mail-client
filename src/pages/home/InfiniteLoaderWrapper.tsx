@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import { EmailType } from "../../types";
@@ -10,6 +10,7 @@ interface InfiniteLoaderWrapperProps<T> {
   isNextPageLoading: boolean;
   items: Array<T>;
   loadNextPage: (start: number, end: number) => void;
+  height: number;
 }
 
 export default function InfiniteLoaderWrapper({
@@ -26,6 +27,9 @@ export default function InfiniteLoaderWrapper({
 
   // Callback function responsible for loading the next page of items.
   loadNextPage,
+
+  // 容器高度
+  height,
 }: InfiniteLoaderWrapperProps<EmailType>) {
   // If there are more items to be loaded then add an extra row to hold a loading indicator.
   const itemCount = hasNextPage ? items.length + 1 : items.length;
@@ -69,9 +73,9 @@ export default function InfiniteLoaderWrapper({
       {({ onItemsRendered, ref }) => (
         <List
           className="List"
-          height={800}
+          height={height}
           itemCount={itemCount}
-          itemSize={168}
+          itemSize={68}
           onItemsRendered={onItemsRendered}
           ref={ref}
           width={"100%"}
