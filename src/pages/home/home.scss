@@ -33,10 +33,10 @@ $headerHeight: 64px;
         // height: 100%;
         position: relative;
 
-        &-loading {
-            background-color: #f8f8f8;
-            padding: 5px 0;
-            text-align: center;
+        &-loading-more {
+            height: 100%;
+            display: flex;
+            align-items: center;
         }
 
         &-header {

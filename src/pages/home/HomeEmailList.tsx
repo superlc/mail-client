@@ -9,9 +9,10 @@ import { debounce } from "lodash";
 import InfiniteLoader from "react-window-infinite-loader";
 import InfiniteLoaderWrapper from "./InfiniteLoaderWrapper";
 
+const pageSize = 10;
+
 export default function HomeEmailList() {
   const pageNumber = useRef(0);
-  const pageSize = useRef(15);
 
   const userInfo = useAppSelector((state) => state.user.data);
   const [emails, setEmails] = useState<EmailType[] | null>(null);
@@ -36,7 +37,7 @@ export default function HomeEmailList() {
     getEmails({
       operation: operationType,
       value: val,
-      limit: pageSize.current,
+      limit: pageSize,
       offset: pageNumber.current,
     })
       .then((res) => {
@@ -60,7 +61,7 @@ export default function HomeEmailList() {
       getEmails({
         operation: "receiver",
         value: userInfo?.email || "",
-        limit: pageSize.current,
+        limit: pageSize,
         offset: pageNumber.current,
       })
         .then((res) => {
@@ -81,6 +82,8 @@ export default function HomeEmailList() {
       pageNumber.current = 0;
     };
   }, [userInfo]);
+
+  console.log("has next page:", (emails?.length ?? 0) < totalCount);
 
   return (
     <>
@@ -112,14 +115,33 @@ export default function HomeEmailList() {
           />
         </div>
         <div className="home-email-list-body">
-          <InfiniteLoaderWrapper
-            hasNextPage={(emails?.length ?? 0) < totalCount}
-            isNextPageLoading={loadingMore}
-            items={emails ?? []}
-            loadNextPage={() => {
-              return Promise.resolve([]);
-            }}
-          />
+          {!!emails && (
+            <InfiniteLoaderWrapper
+              hasNextPage={emails.length < totalCount}
+              isNextPageLoading={loadingMore}
+              items={emails}
+              loadNextPage={(start: number, end: number) => {
+                console.log("start and end: ", start, " ", end);
+                setLoadingMore(true);
+                getEmails({
+                  operation: operationType,
+                  value: operationValue,
+                  offset: Math.ceil(end / pageSize),
+                  limit: pageSize,
+                })
+                  .then((res) => {
+                    setEmails((preEmails) => [
+                      ...(preEmails ?? []),
+                      ...(res.emails ?? []),
+                    ]);
+                  })
+                  .catch((err) => {
+                    message.error(err);
+                  })
+                  .finally(() => setLoadingMore(false));
+              }}
+            />
+          )}
         </div>
       </div>
     </>

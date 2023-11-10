@@ -9,7 +9,7 @@ interface InfiniteLoaderWrapperProps<T> {
   hasNextPage: boolean;
   isNextPageLoading: boolean;
   items: Array<T>;
-  loadNextPage: () => Promise<Array<T>>;
+  loadNextPage: (start: number, end: number) => void;
 }
 
 export default function InfiniteLoaderWrapper({
@@ -48,15 +48,15 @@ export default function InfiniteLoaderWrapper({
     let content;
     if (!isItemLoaded(index)) {
       content = (
-        <div className="email-list-loading-more">
+        <div className="home-email-list-loading-more" style={style}>
           <LoadingOutlined />
         </div>
       );
     } else {
-      content = <EmailItem {...items[index]} />;
+      content = <EmailItem {...items[index]} style={style} />;
     }
 
-    return <div style={style}>{content}</div>;
+    return <>{content}</>;
   };
 
   return (
@@ -64,13 +64,14 @@ export default function InfiniteLoaderWrapper({
       isItemLoaded={isItemLoaded}
       itemCount={itemCount}
       loadMoreItems={loadMoreItems}
+      threshold={8}
     >
       {({ onItemsRendered, ref }) => (
         <List
           className="List"
           height={800}
           itemCount={itemCount}
-          itemSize={68}
+          itemSize={168}
           onItemsRendered={onItemsRendered}
           ref={ref}
           width={"100%"}

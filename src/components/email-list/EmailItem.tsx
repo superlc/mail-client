@@ -12,7 +12,6 @@ import { useEmailDispatch } from "../../pages/home/HomeProvider";
 export function EmailItem(
   props: EmailType & { active?: boolean; style?: React.CSSProperties }
 ) {
-  console.log("--------- email item props:", props);
   const { sender, send_time, attachments, subject, active, style } = props;
 
   const [senderAvatar] = useState((sender || "a")[0].toUpperCase());
