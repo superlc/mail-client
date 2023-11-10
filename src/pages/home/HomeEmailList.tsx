@@ -38,7 +38,7 @@ export default function HomeEmailList() {
       operation: operationType,
       value: val,
       limit: pageSize,
-      offset: pageNumber.current,
+      offset: 0,
     })
       .then((res) => {
         setEmails(res.emails);
@@ -62,7 +62,7 @@ export default function HomeEmailList() {
         operation: "receiver",
         value: userInfo?.email || "",
         limit: pageSize,
-        offset: pageNumber.current,
+        offset: 0,
       })
         .then((res) => {
           setEmails(res.emails);
@@ -130,6 +130,7 @@ export default function HomeEmailList() {
                   limit: pageSize,
                 })
                   .then((res) => {
+                    pageNumber.current = Math.ceil(end / pageSize);
                     setEmails((preEmails) => [
                       ...(preEmails ?? []),
                       ...(res.emails ?? []),
