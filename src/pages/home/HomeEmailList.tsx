@@ -2,11 +2,11 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getEmails } from "../../app/apis";
 import { useAppSelector } from "../../app/hooks";
 import { message } from "antd";
-import { EmailType } from "../../types";
+import { EmailType, OperationType } from "../../types";
 import { useEmailDispatch } from "./HomeProvider";
 import InfiniteLoaderWrapper from "./InfiniteLoaderWrapper";
 import { connect } from "react-redux";
-import { RootState, store } from "../../app/store";
+import { RootState } from "../../app/store";
 
 const pageSize = 10;
 
@@ -15,22 +15,22 @@ function HomeEmailList() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [containerHeight, setContainerHeight] = useState(0);
 
-  const userInfo = useAppSelector((state) => state.user.data);
   const [emails, setEmails] = useState<EmailType[] | null>(null);
   const [totalCount, setTotalCount] = useState<number>(0);
 
   const dispatchEmailDetail = useEmailDispatch();
 
   const [loadingMore, setLoadingMore] = useState(false);
-  const { operationType, operationValue } = store.getState().email;
 
-  console.log("=====================", operationType, operationValue);
+  const { operationType, operationValue } = useAppSelector(
+    (state) => state.email
+  );
 
   useEffect(() => {
-    if (userInfo) {
+    if (!!operationValue) {
       getEmails({
-        operation: "receiver",
-        value: userInfo?.email || "",
+        operation: operationType,
+        value: operationValue,
         limit: pageSize,
         offset: 0,
       })
@@ -51,7 +51,7 @@ function HomeEmailList() {
     return () => {
       pageNumber.current = 0;
     };
-  }, [userInfo]);
+  }, [operationType, operationValue]);
 
   useLayoutEffect(() => {
     if (containerRef.current) {
@@ -71,13 +71,11 @@ function HomeEmailList() {
               isNextPageLoading={loadingMore}
               items={emails}
               loadNextPage={(start: number, end: number) => {
-                console.log("--------- end:", end);
-                console.log("--------- vlaue:", operationValue);
                 if (!!operationValue) {
                   setLoadingMore(true);
                   getEmails({
                     operation: operationType,
-                    value: operationValue ?? "",
+                    value: operationValue,
                     offset: Math.ceil(end / pageSize),
                     limit: pageSize,
                   })

@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { OperationType } from '../../types';
+import { EmailType, OperationType } from '../../types';
 
 
 interface SearchEmailState {
     operationType: OperationType;
-    operationValue?: string;
+    operationValue: string;
 }
 
 const initialState: SearchEmailState = {
@@ -16,8 +16,10 @@ const emailSlice = createSlice({
     name: 'email',
     initialState,
     reducers: {
-        setOperation: (state, action) => {
-            state = { ...action.payload };
+        setOperation: (state, action: PayloadAction<SearchEmailState>) => {
+            const { operationType, operationValue } = action.payload;
+            state.operationType = operationType;
+            state.operationValue = operationValue;
         },
         setOperationValue: (state, action: PayloadAction<string>) => {
             state.operationValue = action.payload;

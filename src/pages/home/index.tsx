@@ -7,7 +7,6 @@ import HomeEmailList from "./HomeEmailList";
 import { EmailProvider } from "./HomeProvider";
 import { useAppSelector } from "../../app/hooks";
 import PageHeader from "../../components/header/Header";
-import { Select } from "antd";
 import SearchFilter from "./components/SearchFilter";
 
 export default function Home() {

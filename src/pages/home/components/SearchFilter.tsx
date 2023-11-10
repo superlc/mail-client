@@ -42,12 +42,12 @@ export default function SearchFilter() {
   }, [operationType]);
 
   useEffect(() => {
+    console.log("search filter:", defaultReceiver);
     // dispatch the operation update
-    console.log("dispatch set operation ");
     dispatch(
       setOperation({
         operationType: "receiver",
-        operationValue: defaultReceiver,
+        operationValue: defaultReceiver || "",
       })
     );
   }, []);
@@ -63,7 +63,8 @@ export default function SearchFilter() {
               dispatch(
                 setOperation({
                   operationType: val,
-                  operationValue: val === "receiver" ? defaultReceiver : "",
+                  operationValue:
+                    val === "receiver" ? defaultReceiver || "" : "",
                 })
               );
             }}
