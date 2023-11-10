@@ -8,7 +8,7 @@ import InfiniteLoaderWrapper from "./InfiniteLoaderWrapper";
 import { connect } from "react-redux";
 import { RootState } from "../../app/store";
 
-const pageSize = 10;
+const pageSize = 20;
 
 function HomeEmailList() {
   const pageNumber = useRef(0);

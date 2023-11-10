@@ -11,6 +11,7 @@ import { OperationType } from "../../../types";
 const Operations = ["text", "domain", "receiver"];
 
 export default function SearchFilter() {
+  // update operation state in this component
   const defaultReceiver = useAppSelector((state) => state.user.data?.email);
   const [operationType, setOperationType] = useState<OperationType>("receiver");
   const [operationValue, setOperationValue] = useState<string>(
@@ -42,7 +43,6 @@ export default function SearchFilter() {
   }, [operationType]);
 
   useEffect(() => {
-    console.log("search filter:", defaultReceiver);
     // dispatch the operation update
     dispatch(
       setOperation({
@@ -50,7 +50,7 @@ export default function SearchFilter() {
         operationValue: defaultReceiver || "",
       })
     );
-  }, []);
+  }, [defaultReceiver]);
 
   return (
     <>
@@ -78,6 +78,14 @@ export default function SearchFilter() {
             <Input.Search
               placeholder="Please select the item"
               style={{ width: 240 }}
+              onSearch={(val) => {
+                dispatch(
+                  setOperation({
+                    operationType: "text",
+                    operationValue: val,
+                  })
+                );
+              }}
               enterButton
             />
           )}
