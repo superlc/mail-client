@@ -46,3 +46,27 @@ export const getUserInfo = () => {
         method: 'get',
     });
 };
+
+// get total user list
+export const getUsers = () => {
+    return request<any, { users: UserType[] }>({
+        url: 'users',
+        method: 'get',
+        params: {
+            offset: -1,
+            limit: -1,
+        },
+    });
+};
+
+// get total domain list
+export const getDomains = () => {
+    return request<any, { domains: string[] }>({
+        url: 'domains',
+        method: 'get',
+        params: {
+            offset: -1,
+            limit: -1,
+        },
+    });
+};

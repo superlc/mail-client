@@ -75,7 +75,7 @@ export default function InfiniteLoaderWrapper({
           className="List"
           height={height}
           itemCount={itemCount}
-          itemSize={68}
+          itemSize={168}
           onItemsRendered={onItemsRendered}
           ref={ref}
           width={"100%"}

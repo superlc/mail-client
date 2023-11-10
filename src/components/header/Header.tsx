@@ -11,8 +11,10 @@ type PageRouteKey = (typeof Navs)[number];
 
 export default function PageHeader({
   current = "home",
+  center,
 }: {
   current?: PageRouteKey;
+  center?: React.ReactNode;
 }) {
   const [navs] = useState(Navs);
   const userInfo = useAppSelector((state) => state.user.data);
@@ -31,6 +33,7 @@ export default function PageHeader({
           </a>
         ))}
       </div>
+      <div className="page-header-center">{center}</div>
       <div className="page-header-logo">
         <UserOutlined />
         <span className="page-header-user-name">{userInfo?.email}</span>

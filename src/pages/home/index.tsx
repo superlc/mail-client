@@ -7,7 +7,8 @@ import HomeEmailList from "./HomeEmailList";
 import { EmailProvider } from "./HomeProvider";
 import { useAppSelector } from "../../app/hooks";
 import PageHeader from "../../components/header/Header";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Select } from "antd";
+import SearchFilter from "./components/SearchFilter";
 
 export default function Home() {
   const userInfo = useAppSelector((state) => state.user.data);
@@ -15,7 +16,7 @@ export default function Home() {
     <EmailProvider>
       <div className="home-page">
         <div className="home-header">
-          <PageHeader />
+          <PageHeader center={<SearchFilter />} />
         </div>
         <div className="home-body">
           <div className="home-aside">

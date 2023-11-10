@@ -9,8 +9,12 @@ $borderColor: #ddd;
     padding-left: 40px;
     padding-right: 40px;
 
-    &-logo {
+    &-center {
         flex: 1;
+        text-align: center;
+    }
+
+    &-logo {
         text-align: right;
     }
 

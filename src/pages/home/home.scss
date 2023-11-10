@@ -9,11 +9,6 @@ $headerHeight: 64px;
         flex-direction: column;
     }
 
-    // &-header {
-    //     height: $headerHeight;
-    //     border-bottom: 1px solid $borderColor;
-    // }
-
     &-body {
         flex: 1;
         display: flex;
@@ -23,8 +18,9 @@ $headerHeight: 64px;
     &-aside {
         box-sizing: border-box;
         border-right: 1px solid $borderColor;
+        width: 360px;
         height: 100%;
-        overflow: auto;
+        // overflow: auto;
     }
 
     &-email-list {
