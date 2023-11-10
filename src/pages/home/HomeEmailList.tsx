@@ -9,7 +9,7 @@ import { debounce } from "lodash";
 import InfiniteLoader from "react-window-infinite-loader";
 import InfiniteLoaderWrapper from "./InfiniteLoaderWrapper";
 
-const pageSize = 10;
+const pageSize = 5;
 
 export default function HomeEmailList() {
   const pageNumber = useRef(0);
