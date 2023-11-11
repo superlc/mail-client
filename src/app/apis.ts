@@ -78,3 +78,14 @@ export const getAttachment = (id: number) => {
         responseType: 'blob',
     });
 };
+
+export const downloadEmail = (id: number, fileName: string) => {
+    return request<any, any>({
+        url: `download/email/${id}`,
+        method: 'get',
+        responseType: 'blob',
+        params: {
+            filename: fileName,
+        },
+    })
+};

@@ -76,4 +76,18 @@
         cursor: default;
         pointer-events: none;
     }
+
+    .show-hover {
+        display: none;
+    }
+
+    &:hover {
+        .show-default {
+            display: none;
+        }
+
+        .show-hover {
+            display: inline-block;
+        }
+    }
 }
