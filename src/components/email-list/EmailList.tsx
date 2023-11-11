@@ -1,4 +1,3 @@
-import { VList as WVList, VListProps as WVListProps } from "virtua";
 import { useEmailContext } from "../../pages/home/HomeProvider";
 import { EmailType } from "../../types";
 import { EmailItem } from "./EmailItem";
