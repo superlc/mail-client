@@ -57,15 +57,8 @@ export default function Login() {
 
   return (
     <div className="login-page">
-      <p className="title">Sign in with Email</p>
+      <p className="title">Sign in</p>
       <Form name="normal_login" className="login-form" onFinish={onFinish}>
-        <Form.Item name="" style={{ display: "none" }}>
-          <Input
-            readOnly={true}
-            autoComplete="off"
-            style={{ display: "none" }}
-          />
-        </Form.Item>
         <Form.Item
           name="email"
           rules={[
@@ -79,6 +72,7 @@ export default function Login() {
             autoComplete="new-password"
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Username"
+            style={{ height: 52 }}
           />
         </Form.Item>
         <Form.Item
@@ -95,6 +89,7 @@ export default function Login() {
             type="password"
             placeholder="Password"
             autoComplete="new-password"
+            style={{ height: 52 }}
           />
         </Form.Item>
         <Form.Item>
@@ -103,6 +98,7 @@ export default function Login() {
             htmlType="submit"
             className="login-form-button"
             loading={logining}
+            style={{ height: 52, fontWeight: "bold" }}
           >
             Continue
           </Button>
