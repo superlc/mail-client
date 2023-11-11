@@ -65,8 +65,11 @@ export function EmailItem(
             <div className="email-item-detail-sender-name">{sender}</div>
             <div className="email-item-detail-sender-tag">
               {!!attachments && <PaperClipOutlined className="show-default" />}
-              <Tooltip title="点击保存邮件" placement="right">
-                <SaveOutlined className="show-hover" />
+              <Tooltip title="Click icon to download email" placement="right">
+                <SaveOutlined
+                  className="show-hover"
+                  onClick={debounce(saveEmail, 300)}
+                />
               </Tooltip>
             </div>
           </div>
