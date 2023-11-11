@@ -14,5 +14,5 @@ export const getSizeDes = (size: number) => {
         size = size / 1024;
         i += 1;
     }
-    return `${size.toFixed(2)}${units[i]}`;
+    return `${size.toFixed(1)}${units[i]}`;
 };
