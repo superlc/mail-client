@@ -55,68 +55,83 @@ export default function Login() {
       });
   };
 
+  // login page background styles: https://evankarageorgos.github.io/hue/grid.html
   return (
-    <div className="login-page">
-      <p className="title">Sign in</p>
-      <Form name="normal_login" className="login-form" onFinish={onFinish}>
-        <Form.Item
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Username.",
-            },
-          ]}
-        >
-          <Input
-            autoComplete="new-password"
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
-            style={{ height: 52 }}
-          />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Password.",
-            },
-          ]}
-        >
-          <Input.Password
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Password"
-            autoComplete="new-password"
-            style={{ height: 52 }}
-          />
-        </Form.Item>
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-            loading={logining}
-            style={{ height: 52, fontWeight: "bold" }}
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        background: `linear-gradient(-173deg, rgba(255,255,255,0.20) 0%, #000000 100%),
+          linear-gradient(72deg, rgba(255,255,255,0.25) 25%, rgba(0,0,0,0.25) 100%),
+          radial-gradient(47% 102%, rgba(255,255,255,0.50) 0%, rgba(21,24,32,0.60) 120%)`,
+        backgroundBlendMode: "multiply, screen",
+      }}
+    >
+      <div className="login-page">
+        <p className="title">Sign in</p>
+        <Form name="normal_login" className="login-form" onFinish={onFinish}>
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Username.",
+              },
+            ]}
           >
-            Continue
-          </Button>
-        </Form.Item>
-      </Form>
-      <p className="des">OR</p>
-      <Button className="google-btn">
-        <span className="google-icon"></span>
-        <a className="google-txt" href={`${googleLoginPath}`}>
-          Continue with Google
-        </a>
-      </Button>
-      <Button className="google-btn">
-        <span className="office-icon"></span>
-        <a className="google-txt" href={`${officeLoginPath}`}>
-          Continue with Office 365
-        </a>
-      </Button>
+            <Input
+              autoComplete="new-password"
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Username"
+              style={{ height: 52 }}
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Password.",
+              },
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Password"
+              autoComplete="new-password"
+              style={{ height: 52 }}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+              loading={logining}
+              style={{ height: 52, fontWeight: "bold" }}
+            >
+              Continue
+            </Button>
+          </Form.Item>
+        </Form>
+        <p className="des">OR</p>
+        <Button className="google-btn">
+          <span className="google-icon"></span>
+          <a className="google-txt" href={`${googleLoginPath}`}>
+            Continue with Google
+          </a>
+        </Button>
+        <Button className="google-btn">
+          <span className="office-icon"></span>
+          <a className="google-txt" href={`${officeLoginPath}`}>
+            Continue with Office 365
+          </a>
+        </Button>
+      </div>
     </div>
   );
 }
