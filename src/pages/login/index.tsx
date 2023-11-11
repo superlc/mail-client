@@ -71,7 +71,7 @@ export default function Login() {
       }}
     >
       <div className="login-page">
-        <p className="title">Sign in</p>
+        <p className="title">Welcome back</p>
         <Form name="normal_login" className="login-form" onFinish={onFinish}>
           <Form.Item
             name="email"
@@ -118,7 +118,9 @@ export default function Login() {
             </Button>
           </Form.Item>
         </Form>
-        <p className="des">OR</p>
+        <p className="des">
+          <span>OR</span>
+        </p>
         <Button className="google-btn">
           <span className="google-icon"></span>
           <a className="google-txt" href={`${googleLoginPath}`}>

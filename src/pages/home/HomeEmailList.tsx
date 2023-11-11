@@ -1,11 +1,13 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { message } from "antd";
+import { connect } from "react-redux";
+
 import { getEmails } from "../../app/apis";
 import { useAppSelector } from "../../app/hooks";
-import { message } from "antd";
-import { EmailType, OperationType } from "../../types";
+
+import { EmailType } from "../../types";
 import { useEmailDispatch } from "./HomeProvider";
 import InfiniteLoaderWrapper from "./InfiniteLoaderWrapper";
-import { connect } from "react-redux";
 import { RootState } from "../../app/store";
 
 const pageSize = 20;
@@ -20,6 +22,7 @@ function HomeEmailList() {
 
   const dispatchEmailDetail = useEmailDispatch();
 
+  const [firstLoading, setFirstLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
 
   const { operationType, operationValue } = useAppSelector(
@@ -28,6 +31,7 @@ function HomeEmailList() {
 
   useEffect(() => {
     if (!!operationValue) {
+      setFirstLoading(true);
       getEmails({
         operation: operationType,
         value: operationValue,
@@ -45,7 +49,8 @@ function HomeEmailList() {
         })
         .catch((err) => {
           message.error(err);
-        });
+        })
+        .finally(() => setFirstLoading(false));
     }
 
     return () => {
