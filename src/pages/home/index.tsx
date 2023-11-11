@@ -19,7 +19,7 @@ export default function Home() {
     <EmailProvider>
       <div className="home-page">
         <div className="home-header">
-          <PageHeader center={<SearchFilter />} />
+          <PageHeader current="emails" center={<SearchFilter />} />
         </div>
         <div className="home-body">
           <SplitPane
