@@ -47,7 +47,7 @@ export function EmailItem(
           </div>
           <div className="email-item-detail-extra">
             <div className="email-item-detail-extra-type">{subject}</div>
-            <div className="email-item-detail-extra-date">{send_time}</div>d
+            <div className="email-item-detail-extra-date">{send_time}</div>
           </div>
         </div>
       </div>
