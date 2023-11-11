@@ -46,8 +46,6 @@ export function EmailItem(
           currentActiveItem?.classList.remove("active");
           currentItem?.classList.add("active");
 
-          console.log("==========", currentItem);
-
           dispatchEmailDetail!({
             type: "set",
             payload: props,
@@ -68,10 +66,7 @@ export function EmailItem(
             <div className="email-item-detail-sender-tag">
               {!!attachments && <PaperClipOutlined className="show-default" />}
               <Tooltip title="点击保存邮件" placement="right">
-                <SaveOutlined
-                  className="show-hover"
-                  onClick={debounce(saveEmail, 200)}
-                />
+                <SaveOutlined className="show-hover" />
               </Tooltip>
             </div>
           </div>
