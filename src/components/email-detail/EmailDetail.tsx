@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import "./EmailDetail.scss";
 import { hashAvatarBgColor, randomRgb } from "../../utils/random";
+import Attachment from "./Attachment";
 
 export default function EmailDetail({
   attachments,
@@ -15,18 +16,12 @@ export default function EmailDetail({
   subject,
   updated_at,
 }: EmailType) {
-  // const [emailContent] = useState(
-  //   URL.createObjectURL(new Blob([message_body], { type: "text/html" }))
-  // );
-
-  // console.log(message_body, emailContent);
-
   const avatarChar = sender[0].toUpperCase();
 
   return (
     <div className="email-detail">
       <div className="email-detail-header">
-        <div className="email-detail-header-subject">{subject}</div>
+        <div className="email-detail-header-subject">{subject}d</div>
         <div className="email-detail-header-summary">
           <Avatar
             size={48}
@@ -39,12 +34,19 @@ export default function EmailDetail({
               {sender}
             </div>
             <div className="email-detail-header-summary-account-receiver">
-              <span>To: </span>
+              <span style={{ color: "rgba(0,0,0,0.8" }}>To: </span>
               {receiver}
             </div>
           </div>
           <div className="email-detail-header-summary-date">{send_time}</div>
         </div>
+        {attachments?.length > 0 && (
+          <div className="email-detail-header-attachments">
+            {attachments.map((item, index) => (
+              <Attachment key={index} {...item} />
+            ))}
+          </div>
+        )}
       </div>
       <div className="email-detail-body">
         <iframe

@@ -1,5 +1,5 @@
 import { EmailType, OperationType, UserType } from '../types';
-import request from '../utils/request';
+import request, { baseUrl } from '../utils/request';
 
 export interface GetEmailsParams {
     operation: OperationType;
@@ -68,5 +68,13 @@ export const getDomains = () => {
             offset: -1,
             limit: -1,
         },
+    });
+};
+
+export const getAttachment = (id: number) => {
+    return request<any, any>({
+        url: `attachment/${id}`,
+        method: 'get',
+        responseType: 'blob',
     });
 };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { store } from '../app/store';
 
-const baseUrl = 'https://belieforever.cn/';
+export const baseUrl = process.env.REACT_APP_PROXY_HOST;
 
 axios.defaults.baseURL = baseUrl;
 axios.defaults.withCredentials = true;
