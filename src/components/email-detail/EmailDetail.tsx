@@ -21,7 +21,7 @@ export default function EmailDetail({
   return (
     <div className="email-detail">
       <div className="email-detail-header">
-        <div className="email-detail-header-subject">{subject}d</div>
+        <div className="email-detail-header-subject">{subject}</div>
         <div className="email-detail-header-summary">
           <Avatar
             size={48}

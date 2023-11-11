@@ -38,11 +38,7 @@ export default forwardRef(function EmailList(
     >
       {({ index, style }) =>
         index < totalCount ? (
-          <EmailItem
-            {...list[index]}
-            style={style}
-            active={current === index}
-          />
+          <EmailItem {...list[index]} style={style} />
         ) : (
           <div className="email-list-loading-more">
             <LoadingOutlined />

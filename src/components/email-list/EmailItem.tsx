@@ -33,9 +33,21 @@ export function EmailItem(
 
     return (
       <div
-        className={classNames("email-item", { active: active })}
+        id={`email-item-${id}`}
+        className={classNames("email-item")}
         style={style ?? {}}
         onClick={() => {
+          const currentItem = document.querySelector(`#email-item-${id}`);
+          if (currentItem?.classList.contains("active")) {
+            return;
+          }
+          const currentActiveItem =
+            document.querySelector(".email-item.active");
+          currentActiveItem?.classList.remove("active");
+          currentItem?.classList.add("active");
+
+          console.log("==========", currentItem);
+
           dispatchEmailDetail!({
             type: "set",
             payload: props,
