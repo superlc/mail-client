@@ -1,6 +1,10 @@
 import { Avatar, Tooltip, message } from "antd";
 import { useState } from "react";
-import { PaperClipOutlined, SaveOutlined } from "@ant-design/icons";
+import {
+  DownloadOutlined,
+  PaperClipOutlined,
+  SaveOutlined,
+} from "@ant-design/icons";
 import classNames from "classnames";
 import { debounce } from "lodash";
 
@@ -66,7 +70,7 @@ export function EmailItem(
             <div className="email-item-detail-sender-tag">
               {!!attachments && <PaperClipOutlined className="show-default" />}
               <Tooltip title="Click icon to download email" placement="right">
-                <SaveOutlined
+                <DownloadOutlined
                   className="show-hover"
                   onClick={debounce(saveEmail, 300)}
                 />
