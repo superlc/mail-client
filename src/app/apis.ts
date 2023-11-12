@@ -95,6 +95,7 @@ const downloadAjax = (url: string) => {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             document.body.appendChild(a);
+            // console.log(xhr?.getResponseHeader('content-disposition'), decodeURIComponent(xhr?.getResponseHeader('content-disposition') || ''));
             const fileName = decodeURIComponent(xhr?.getResponseHeader('content-disposition')?.split(';')[1].split('=')[1] || '');
             a.href = url;
             a.download = fileName as string;

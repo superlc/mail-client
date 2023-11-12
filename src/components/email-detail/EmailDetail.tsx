@@ -1,27 +1,51 @@
-import { Avatar } from "antd";
+import { Avatar, Button, Dropdown } from "antd";
 import { EmailType } from "../../types";
-import { useState } from "react";
 
 import "./EmailDetail.scss";
-import { hashAvatarBgColor, randomRgb } from "../../utils/random";
+import { hashAvatarBgColor } from "../../utils/random";
 import Attachment from "./Attachment";
+import { EllipsisOutlined, SaveOutlined } from "@ant-design/icons";
+import { downloadEmail } from "../../app/apis";
 
 export default function EmailDetail({
   attachments,
-  created_at,
+  // created_at,
   message_body,
   receiver,
   sender,
   send_time,
   subject,
-  updated_at,
-}: EmailType) {
+  id,
+}: // updated_at,
+EmailType) {
   const avatarChar = sender[0].toUpperCase();
 
   return (
     <div className="email-detail">
       <div className="email-detail-header">
-        <div className="email-detail-header-subject">{subject}</div>
+        <div className="email-detail-header-subject">
+          <div className="email-detail-header-subject-title">{subject}</div>
+          <div className="email-detail-header-subject-actions">
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: "1",
+                    label: "Download this email",
+                    icon: <SaveOutlined />,
+                    onClick: () => {
+                      downloadEmail(id);
+                    },
+                  },
+                ],
+              }}
+            >
+              <Button>
+                <EllipsisOutlined />
+              </Button>
+            </Dropdown>
+          </div>
+        </div>
         <div className="email-detail-header-summary">
           <Avatar
             size={48}

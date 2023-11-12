@@ -13,11 +13,20 @@ $headerHeight: 84px;
         padding-bottom: 10px;
 
         &-subject {
-            font-size: 32px;
-            color: rgba(0,0,0,0.9);
-            font-weight: 500;
-            line-height: 40px;
+            display: flex;
             margin-bottom: 10px;
+
+            &-title {
+                font-size: 32px;
+                color: rgba(0,0,0,0.9);
+                font-weight: 500;
+                line-height: 40px;
+                padding-right: 20px;
+            }
+            
+            &-actions {
+                font-size: 24px;
+            }
         }
 
         &-summary {

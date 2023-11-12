@@ -23,14 +23,6 @@ export function EmailItem(
   const [senderAvatar] = useState((sender || "a")[0].toUpperCase());
   const dispatchEmailDetail = useEmailDispatch();
 
-  const saveEmail = (e: React.MouseEvent<HTMLDivElement>) => {
-    // e.preventDefault();
-    e.stopPropagation();
-    console.log("---------- save email ---------");
-
-    downloadEmail(id);
-  };
-
   if (sender) {
     return (
       <div
@@ -65,10 +57,10 @@ export function EmailItem(
           <div className="email-item-detail-sender">
             <div className="email-item-detail-sender-name">{sender}</div>
             <div className="email-item-detail-sender-tag">
-              {!!attachments && <PaperClipOutlined className="show-default" />}
-              <Tooltip title="Click icon to download email" placement="right">
+              {!!attachments && <PaperClipOutlined />}
+              {/* <Tooltip title="Click icon to download email" placement="right">
                 <DownloadOutlined className="show-hover" onClick={saveEmail} />
-              </Tooltip>
+              </Tooltip> */}
             </div>
           </div>
           <div className="email-item-detail-extra">
