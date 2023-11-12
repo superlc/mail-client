@@ -27,7 +27,15 @@ export default function SearchFilter() {
     if (operationType === "receiver") {
       getUsers()
         .then((res) => {
-          setReceivers((res.users || []).map((user) => user.email));
+          const { users = [] } = res;
+          setOperationValue(users[0].email);
+          setReceivers(users.map((user) => user.email));
+          dispatch(
+            setOperation({
+              operationType,
+              operationValue: users[0].email || defaultReceiver || "",
+            })
+          );
         })
         .catch((err) => message.error(err))
         .finally(() => {});
@@ -35,7 +43,15 @@ export default function SearchFilter() {
     if (operationType === "domain") {
       getDomains()
         .then((res) => {
-          setDomains(res.domains || []);
+          const { domains = [] } = res;
+          setOperationValue(domains[0]);
+          setDomains(domains);
+          dispatch(
+            setOperation({
+              operationType,
+              operationValue: domains[0],
+            })
+          );
         })
         .catch((err) => message.error(err))
         .finally(() => {});
@@ -60,13 +76,6 @@ export default function SearchFilter() {
             value={operationType}
             onChange={(val) => {
               setOperationType(val);
-              dispatch(
-                setOperation({
-                  operationType: val,
-                  operationValue:
-                    val === "receiver" ? defaultReceiver || "" : "",
-                })
-              );
             }}
             options={Operations.map((item) => ({
               value: item,
@@ -91,6 +100,7 @@ export default function SearchFilter() {
           )}
           {operationType === "domain" && (
             <Select
+              key={"domain"}
               value={operationValue || domains[0]}
               options={domains.map((item) => ({
                 value: item,
@@ -106,6 +116,7 @@ export default function SearchFilter() {
           )}
           {operationType === "receiver" && (
             <Select
+              key={"receiver"}
               value={operationValue || receivers[0]}
               options={receivers.map((item) => ({
                 value: item,
