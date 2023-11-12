@@ -90,13 +90,12 @@ const downloadAjax = (url: string) => {
     xhr.onreadystatechange = () => {
         console.log(xhr.readyState, xhr.status);
         if (xhr.readyState === 4 && xhr.status === 200) {
-
             const data = xhr.response;
             const blob = new Blob([data]);
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             document.body.appendChild(a);
-            const fileName = decodeURIComponent(xhr?.getResponseHeader('content-disposition')?.split(',')[1].split('=')[1] || '');
+            const fileName = decodeURIComponent(xhr?.getResponseHeader('content-disposition')?.split(';')[1].split('=')[1] || '');
             a.href = url;
             a.download = fileName as string;
             a.click();
