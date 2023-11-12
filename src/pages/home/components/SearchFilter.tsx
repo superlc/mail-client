@@ -81,12 +81,12 @@ export default function SearchFilter() {
               value: item,
               label: item,
             }))}
-            style={{ width: 100, marginRight: 10 }}
+            style={{ width: 120, marginRight: 10, textAlign: "left" }}
           />
           {operationType === "text" && (
             <Input.Search
               placeholder="Please select the item"
-              style={{ width: 240 }}
+              style={{ width: 400 }}
               onSearch={(val) => {
                 dispatch(
                   setOperation({
@@ -110,7 +110,7 @@ export default function SearchFilter() {
                 setOperationValue(val);
                 dispatch(setOperationValueOfStore(val));
               }}
-              style={{ width: 240 }}
+              style={{ width: 400, textAlign: "left" }}
               showSearch
             />
           )}
@@ -126,7 +126,7 @@ export default function SearchFilter() {
                 setOperationValue(val);
                 dispatch(setOperationValueOfStore(val));
               }}
-              style={{ width: 240 }}
+              style={{ width: 400, textAlign: "left" }}
               showSearch
             />
           )}
