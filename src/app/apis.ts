@@ -1,5 +1,6 @@
 import { EmailType, OperationType, UserType } from '../types';
 import request, { baseUrl } from '../utils/request';
+import { store } from './store';
 
 export interface GetEmailsParams {
     operation: OperationType;
@@ -79,13 +80,32 @@ export const getAttachment = (id: number) => {
     });
 };
 
-export const downloadEmail = (id: number, fileName: string) => {
-    return request<any, any>({
-        url: `download/email/${id}`,
-        method: 'get',
-        responseType: 'blob',
-        params: {
-            filename: fileName,
-        },
-    })
+const downloadAjax = (url: string) => {
+    const token = store.getState().token.token;
+    const xhr = new XMLHttpRequest();
+    xhr.open('get', url, true);
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+    xhr.responseType = 'blob'
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = () => {
+        console.log(xhr.readyState, xhr.status);
+        if (xhr.readyState === 4 && xhr.status === 200) {
+
+            const data = xhr.response;
+            const blob = new Blob([data]);
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            document.body.appendChild(a);
+            const fileName = decodeURIComponent(xhr?.getResponseHeader('content-disposition')?.split(',')[1].split('=')[1] || '');
+            a.href = url;
+            a.download = fileName as string;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    };
+    xhr.send();
+};
+
+export const downloadEmail = (id: number) => {
+    return downloadAjax(`${baseUrl}/download/email/${id}`);
 };

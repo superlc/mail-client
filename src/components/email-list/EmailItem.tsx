@@ -14,7 +14,6 @@ import { hashAvatarBgColor } from "../../utils/random";
 import { EmailType } from "../../types";
 import { useEmailDispatch } from "../../pages/home/HomeProvider";
 import { downloadEmail } from "../../app/apis";
-import { download } from "../../utils/file";
 
 export function EmailItem(
   props: EmailType & { active?: boolean; style?: React.CSSProperties }
@@ -24,17 +23,15 @@ export function EmailItem(
   const [senderAvatar] = useState((sender || "a")[0].toUpperCase());
   const dispatchEmailDetail = useEmailDispatch();
 
+  const saveEmail = (e: React.MouseEvent<HTMLDivElement>) => {
+    // e.preventDefault();
+    e.stopPropagation();
+    console.log("---------- save email ---------");
+
+    downloadEmail(id);
+  };
+
   if (sender) {
-    const saveEmail = (e: React.MouseEvent<HTMLDivElement>) => {
-      e.preventDefault();
-
-      downloadEmail(id, encodeURIComponent(subject))
-        .then((res) => {
-          download(res, encodeURIComponent(subject));
-        })
-        .catch((err) => message.error(err));
-    };
-
     return (
       <div
         id={`email-item-${id}`}
@@ -70,10 +67,7 @@ export function EmailItem(
             <div className="email-item-detail-sender-tag">
               {!!attachments && <PaperClipOutlined className="show-default" />}
               <Tooltip title="Click icon to download email" placement="right">
-                <DownloadOutlined
-                  className="show-hover"
-                  onClick={debounce(saveEmail, 300)}
-                />
+                <DownloadOutlined className="show-hover" onClick={saveEmail} />
               </Tooltip>
             </div>
           </div>
