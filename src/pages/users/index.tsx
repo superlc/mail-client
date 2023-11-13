@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 import { getUsers } from "../../app/apis";
 import { UserOutlined } from "@ant-design/icons";
 
-const pageSize = 20;
+interface TableParams {
+  pagination?: TablePaginationConfig;
+}
 
 export default function Users() {
   const columns: ColumnsType<UserType> = [
@@ -44,18 +46,25 @@ export default function Users() {
 
   const [users, setUsers] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(false);
-  const [pageIndex, setPageIndex] = useState(0);
+  const [tableParams, setTableParams] = useState<TableParams>({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  });
 
   useEffect(() => {
     setLoading(true);
-    getUsers(0, pageSize)
+    getUsers(
+      tableParams.pagination?.current! - 1,
+      tableParams.pagination?.pageSize
+    )
       .then((res) => {
         setUsers(res.users || []);
-        setPageIndex((index) => index + 1);
       })
       .catch((err) => message.error(err))
       .finally(() => setLoading(false));
-  }, []);
+  }, [JSON.stringify(tableParams)]);
 
   return (
     <div className="users">
@@ -64,7 +73,19 @@ export default function Users() {
       </div>
       <div className="users-body">
         <div className="users-main">
-          <Table columns={columns} loading={loading} dataSource={users} />
+          <Table
+            columns={columns}
+            loading={loading}
+            dataSource={users}
+            rowKey={(r) => r.id}
+            pagination={tableParams.pagination}
+            onChange={(pagination: TablePaginationConfig) => {
+              console.log("pagination ======== ", pagination);
+              setTableParams({
+                pagination: pagination,
+              });
+            }}
+          />
         </div>
       </div>
     </div>

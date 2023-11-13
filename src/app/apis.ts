@@ -50,7 +50,7 @@ export const getUserInfo = () => {
 
 // get total user list
 export const getUsers = (offset = -1, limit = -1) => {
-    return request<any, { users: UserType[] }>({
+    return request<any, { users: UserType[], total_count: number }>({
         url: 'users',
         method: 'get',
         params: {
