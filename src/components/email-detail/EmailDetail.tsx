@@ -4,12 +4,7 @@ import { EmailType } from "../../types";
 import "./EmailDetail.scss";
 import { hashAvatarBgColor } from "../../utils/random";
 import Attachment from "./Attachment";
-import {
-  DownloadOutlined,
-  EllipsisOutlined,
-  MoreOutlined,
-  SaveOutlined,
-} from "@ant-design/icons";
+import { DownloadOutlined, MoreOutlined } from "@ant-design/icons";
 import { downloadEmail } from "../../app/apis";
 
 export default function EmailDetail({

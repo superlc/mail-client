@@ -24,7 +24,7 @@ export interface UserType {
     id: number;
     admin: boolean;
     email: string;
-    provider: string;
+    provider: ProviderType;
     scan: boolean;
 }
 

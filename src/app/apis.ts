@@ -49,13 +49,13 @@ export const getUserInfo = () => {
 };
 
 // get total user list
-export const getUsers = () => {
+export const getUsers = (offset = -1, limit = -1) => {
     return request<any, { users: UserType[] }>({
         url: 'users',
         method: 'get',
         params: {
-            offset: -1,
-            limit: -1,
+            offset,
+            limit,
         },
     });
 };
