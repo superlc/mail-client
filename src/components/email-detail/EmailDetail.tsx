@@ -5,6 +5,7 @@ import "./EmailDetail.scss";
 import { hashAvatarBgColor } from "../../utils/random";
 import Attachment from "./Attachment";
 import {
+  DownloadOutlined,
   EllipsisOutlined,
   MoreOutlined,
   SaveOutlined,
@@ -53,7 +54,7 @@ EmailType) {
                 {
                   key: "1",
                   label: "Download this email",
-                  icon: <SaveOutlined />,
+                  icon: <DownloadOutlined />,
                   onClick: () => {
                     downloadEmail(id);
                   },
