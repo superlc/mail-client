@@ -4,7 +4,11 @@ import { EmailType } from "../../types";
 import "./EmailDetail.scss";
 import { hashAvatarBgColor } from "../../utils/random";
 import Attachment from "./Attachment";
-import { EllipsisOutlined, SaveOutlined } from "@ant-design/icons";
+import {
+  EllipsisOutlined,
+  MoreOutlined,
+  SaveOutlined,
+} from "@ant-design/icons";
 import { downloadEmail } from "../../app/apis";
 
 export default function EmailDetail({
@@ -25,26 +29,6 @@ EmailType) {
       <div className="email-detail-header">
         <div className="email-detail-header-subject">
           <div className="email-detail-header-subject-title">{subject}</div>
-          <div className="email-detail-header-subject-actions">
-            <Dropdown
-              menu={{
-                items: [
-                  {
-                    key: "1",
-                    label: "Download this email",
-                    icon: <SaveOutlined />,
-                    onClick: () => {
-                      downloadEmail(id);
-                    },
-                  },
-                ],
-              }}
-            >
-              <Button>
-                <EllipsisOutlined />
-              </Button>
-            </Dropdown>
-          </div>
         </div>
         <div className="email-detail-header-summary">
           <Avatar
@@ -63,6 +47,26 @@ EmailType) {
             </div>
           </div>
           <div className="email-detail-header-summary-date">{send_time}</div>
+          <Dropdown
+            menu={{
+              items: [
+                {
+                  key: "1",
+                  label: "Download this email",
+                  icon: <SaveOutlined />,
+                  onClick: () => {
+                    downloadEmail(id);
+                  },
+                },
+              ],
+            }}
+          >
+            <div className="email-detail-header-actions">
+              <div className="email-detail-header-actions-item">
+                <MoreOutlined />
+              </div>
+            </div>
+          </Dropdown>
         </div>
         {attachments?.length > 0 && (
           <div className="email-detail-header-attachments">
