@@ -109,3 +109,14 @@ const downloadAjax = (url: string) => {
 export const downloadEmail = (id: number) => {
     return downloadAjax(`${baseUrl}/download/email/${id}`);
 };
+
+export const updateScan = (id: number, scan: boolean) => {
+    return request<any, UserType>({
+        url: 'user/scan',
+        method: 'post',
+        data: {
+            id,
+            scan,
+        },
+    });
+};
