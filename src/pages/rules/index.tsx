@@ -1,7 +1,12 @@
-import { Button, Modal, Popconfirm, Table, Tag, message } from "antd";
+import { Button, Modal, Popconfirm, Select, Table, Tag, message } from "antd";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import PageHeader from "../../components/header/Header";
-import { OperationType, RuleType, SecureLevelType } from "../../types";
+import {
+  GetRulesParams,
+  OperationType,
+  RuleType,
+  SecureLevelType,
+} from "../../types";
 
 import "./index.scss";
 import { useEffect, useRef, useState } from "react";
@@ -10,6 +15,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { useImmer } from "use-immer";
 import { BsTrash3 } from "react-icons/bs";
 import CreateRule from "./CreateRule";
+import RuleFilter from "./RuleFilter";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -91,11 +97,17 @@ export default function Rules() {
 
   const formRef = useRef();
 
-  const fetchRules = () => {
+  const fetchRules = (fetchParams?: {
+    operation?: OperationType;
+    email?: string;
+    value?: string;
+    secure_level?: SecureLevelType;
+  }) => {
     setLoading(true);
     getRules({
       offset: tableParams.pagination?.current! - 1,
       limit: tableParams.pagination?.pageSize!,
+      ...fetchParams,
     })
       .then((res) => {
         setRules(res.rules || []);
@@ -138,7 +150,26 @@ export default function Rules() {
         <div className="rules-body">
           <div className="rules-main">
             <div className="rules-main-header">
-              <div className="rules-main-header-filters">filters</div>
+              <div className="rules-main-header-filters">
+                <RuleFilter
+                  onClick={(queryType, queryValue) => {
+                    const fetchParams: Omit<
+                      GetRulesParams,
+                      "limit" | "offset"
+                    > = {};
+                    if (queryType === "secure_level") {
+                      if (!queryValue) {
+                        return message.info("Please select secure level");
+                      }
+                      fetchParams.secure_level = queryValue as SecureLevelType;
+                    } else {
+                      fetchParams.operation = queryType as OperationType;
+                      fetchParams.value = queryValue;
+                    }
+                    fetchRules(fetchParams);
+                  }}
+                />
+              </div>
               <div className="rules-main-header-actions">
                 <Button
                   type="primary"

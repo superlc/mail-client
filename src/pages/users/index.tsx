@@ -35,11 +35,11 @@ export default function Users() {
       },
     },
     {
-      title: "Role",
+      title: "Admin",
       dataIndex: "admin",
       width: "20%",
       render: (admin: boolean) => {
-        return <>{admin ? <Tag icon={<UserOutlined />}>admin</Tag> : "-"}</>;
+        return <>{admin ? <Tag>YES</Tag> : <Tag>NO</Tag>}</>;
       },
     },
     {

@@ -38,3 +38,12 @@ export interface RuleType {
     value: string;
     created_at: string;
 }
+
+export interface GetRulesParams {
+    offset: number;
+    limit: number;
+    operation?: OperationType;
+    email?: string;
+    value?: string;
+    secure_level?: SecureLevelType;
+}
