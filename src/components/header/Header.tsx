@@ -6,7 +6,7 @@ import { useAppSelector } from "../../app/hooks";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-const Navs = ["emails", "users", "downloads"] as const;
+const Navs = ["emails", "users", "rules", "downloads"] as const;
 
 type PageRouteKey = (typeof Navs)[number];
 

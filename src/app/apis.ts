@@ -1,4 +1,4 @@
-import { EmailType, OperationType, UserType } from '../types';
+import { EmailType, OperationType, RuleType, SecureLevelType, UserType } from '../types';
 import request, { baseUrl } from '../utils/request';
 import { store } from './store';
 
@@ -118,5 +118,44 @@ export const updateScan = (id: number, scan: boolean) => {
             id,
             scan,
         },
+    });
+};
+
+interface GetRulesParams {
+    offset: number;
+    limit: number;
+    operation?: OperationType;
+    email?: string;
+    value?: string;
+    secure_level?: SecureLevelType;
+}
+
+export const getRules = (params: GetRulesParams) => {
+    return request<GetRulesParams, { rules: RuleType[], total_count: number }>({
+        url: 'rules',
+        method: 'get',
+        params: { ...params },
+    });
+}
+
+interface CreateRuleParams {
+    operation?: OperationType;
+    'secure-level'?: SecureLevelType;
+    users?: string[];
+    value?: string;
+}
+
+export const createRule = (params: CreateRuleParams) => {
+    return request({
+        url: 'rule',
+        method: 'post',
+        data: params,
+    });
+};
+
+export const deleteRule = (id: number) => {
+    return request({
+        url: `rule/${id}`,
+        method: 'delete'
     });
 };

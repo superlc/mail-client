@@ -1,0 +1,111 @@
+import { Form, Input, Radio } from "antd";
+import { forwardRef, useImperativeHandle, useState } from "react";
+import UsersSelect from "../../components/users-select/UsersSelect";
+import DomainsSelect from "../../components/domains-select/DomainsSelect";
+import { OperationType, SecureLevelType } from "../../types";
+
+export default forwardRef(function CreateRule(props, ref) {
+  const [operationType, setOperationType] = useState<OperationType | undefined>(
+    undefined
+  );
+  const [secureLevel, setSecureLevel] = useState<SecureLevelType | undefined>(
+    undefined
+  );
+  const [users, setUsers] = useState<string[]>([]);
+
+  const [textValue, setTextValue] = useState<string | undefined>(undefined);
+  const [domainValue, setDomainValue] = useState<string | undefined>(undefined);
+  const [receiverValue, setReceiverValue] = useState<string | undefined>(
+    undefined
+  );
+
+  useImperativeHandle(ref, () => {
+    return {
+      getCreateParams: () => {
+        return {
+          operation: operationType,
+          secure_level: secureLevel,
+          users: users,
+          value:
+            operationType === "text"
+              ? textValue
+              : operationType === "domain"
+              ? domainValue
+              : receiverValue,
+        };
+      },
+    };
+  });
+
+  return (
+    <div className="create-rule">
+      <Form layout="horizontal" labelCol={{ span: 6 }}>
+        {operationType !== "receiver" && (
+          <Form.Item label="Users" name="users">
+            <UsersSelect
+              mode="multiple"
+              onChange={(e) => {
+                setUsers(e);
+              }}
+            />
+          </Form.Item>
+        )}
+        <Form.Item label="Operation Type" name="operationType">
+          <Radio.Group
+            value={operationType}
+            onChange={(e) => {
+              const operationType = e.target.value;
+              setOperationType(operationType);
+            }}
+          >
+            <Radio.Button value="text">text</Radio.Button>
+            <Radio.Button value="domain">domain</Radio.Button>
+            <Radio.Button value="receiver">receiver</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label="Secure Level" name="secureLevel">
+          <Radio.Group
+            value={secureLevel}
+            onChange={(e) => {
+              setSecureLevel(e.target.value);
+            }}
+          >
+            <Radio.Button value="delete">delete</Radio.Button>
+            <Radio.Button value="trash">trash</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        {operationType === "receiver" && (
+          <Form.Item key="receiver" label="Receiver" name="receiver">
+            <UsersSelect
+              onChange={(val) => {
+                setReceiverValue(val);
+                // 按receiver时，用户只有receiver 一个
+                setUsers([val]);
+              }}
+            />
+          </Form.Item>
+        )}
+        {operationType === "domain" && (
+          <Form.Item key="domains" label="Domains" name="domains">
+            <DomainsSelect
+              onChange={(d) => {
+                setDomainValue(d);
+              }}
+            />
+          </Form.Item>
+        )}
+        {operationType === "text" && (
+          <Form.Item key="text" label="Value" name="text">
+            <Input
+              placeholder="Please input text value"
+              value={textValue}
+              onChange={(e) => {
+                setTextValue(e.target.value);
+              }}
+            />
+          </Form.Item>
+        )}
+      </Form>
+    </div>
+  );
+});

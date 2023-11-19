@@ -7,6 +7,7 @@ import Downloads from "./pages/downloads";
 import PrivateRoute from "./components/PrivateRoute";
 
 import "react-loading-skeleton/dist/skeleton.css";
+import Rules from "./pages/rules";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Downloads />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "rules",
+    element: (
+      <PrivateRoute>
+        <Rules />
       </PrivateRoute>
     ),
   },

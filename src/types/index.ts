@@ -28,7 +28,7 @@ export interface UserType {
     scan: boolean;
 }
 
-export type SecureLevelType = 'TRASH' | 'DELETE';
+export type SecureLevelType = 'trash' | 'delete';
 
 export interface RuleType {
     id: number;
