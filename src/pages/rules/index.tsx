@@ -16,6 +16,7 @@ import { useImmer } from "use-immer";
 import { BsTrash3 } from "react-icons/bs";
 import CreateRule from "./CreateRule";
 import RuleFilter from "./RuleFilter";
+import { current } from "@reduxjs/toolkit";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -89,7 +90,7 @@ export default function Rules() {
   const [tableParams, setTableParams] = useImmer<TableParams>({
     pagination: {
       current: 1,
-      pageSize: 10,
+      pageSize: 3,
     },
   });
   const [showDialogFlag, setShowDialogFlag] = useState(false);
@@ -98,6 +99,7 @@ export default function Rules() {
   const formRef = useRef();
 
   const fetchRules = (fetchParams?: {
+    offset?: number;
     operation?: OperationType;
     email?: string;
     value?: string;
@@ -105,7 +107,10 @@ export default function Rules() {
   }) => {
     setLoading(true);
     getRules({
-      offset: tableParams.pagination?.current! - 1,
+      offset:
+        typeof fetchParams?.offset === "undefined"
+          ? tableParams.pagination?.current! - 1
+          : fetchParams?.offset,
       limit: tableParams.pagination?.pageSize!,
       ...fetchParams,
     })
@@ -138,8 +143,9 @@ export default function Rules() {
   };
 
   useEffect(() => {
+    console.log("-----------", tableParams);
     fetchRules();
-  }, [JSON.stringify(tableParams)]);
+  }, [tableParams.pagination?.current, tableParams.pagination?.pageSize]);
 
   return (
     <>
@@ -153,10 +159,9 @@ export default function Rules() {
               <div className="rules-main-header-filters">
                 <RuleFilter
                   onClick={(queryType, queryValue) => {
-                    const fetchParams: Omit<
-                      GetRulesParams,
-                      "limit" | "offset"
-                    > = {};
+                    const fetchParams: Omit<GetRulesParams, "limit"> = {
+                      offset: 0,
+                    };
                     if (queryType === "secure_level") {
                       if (!queryValue) {
                         return message.info("Please select secure level");

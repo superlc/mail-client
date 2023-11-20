@@ -25,15 +25,12 @@ const options = [
 
 export type QueryType = (typeof options)[number]["value"];
 
-export default forwardRef(function RuleFilter(
-  props: {
-    onClick: (
-      queryType: QueryType | undefined,
-      queryValue: string | undefined
-    ) => void;
-  },
-  ref
-) {
+export default function RuleFilter(props: {
+  onClick: (
+    queryType: QueryType | undefined,
+    queryValue: string | undefined
+  ) => void;
+}) {
   const { onClick } = props;
   const [queryType, setQueryType] = useState<QueryType | undefined>(undefined);
   const [queryValue, setQueryValue] = useState<string | undefined>(undefined);
@@ -119,4 +116,4 @@ export default forwardRef(function RuleFilter(
       )}
     </>
   );
-});
+}
