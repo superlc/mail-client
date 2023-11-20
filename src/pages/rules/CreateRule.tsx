@@ -5,9 +5,9 @@ import DomainsSelect from "../../components/domains-select/DomainsSelect";
 import { OperationType, SecureLevelType } from "../../types";
 
 export default forwardRef(function CreateRule(props, ref) {
-  const [operationType, setOperationType] = useState<OperationType | undefined>(
-    undefined
-  );
+  const [operationType, setOperationType] = useState<
+    "text" | "domain" | "sender" | undefined
+  >(undefined);
   const [secureLevel, setSecureLevel] = useState<SecureLevelType | undefined>(
     undefined
   );
@@ -15,9 +15,7 @@ export default forwardRef(function CreateRule(props, ref) {
 
   const [textValue, setTextValue] = useState<string | undefined>(undefined);
   const [domainValue, setDomainValue] = useState<string | undefined>(undefined);
-  const [receiverValue, setReceiverValue] = useState<string | undefined>(
-    undefined
-  );
+  const [senderValue, setSenderValue] = useState<string | undefined>(undefined);
 
   useImperativeHandle(ref, () => {
     return {
@@ -31,7 +29,7 @@ export default forwardRef(function CreateRule(props, ref) {
               ? textValue
               : operationType === "domain"
               ? domainValue
-              : receiverValue,
+              : senderValue,
         };
       },
     };
@@ -40,7 +38,7 @@ export default forwardRef(function CreateRule(props, ref) {
   return (
     <div className="create-rule">
       <Form layout="horizontal" labelCol={{ span: 6 }}>
-        {operationType !== "receiver" && (
+        {operationType !== "sender" && (
           <Form.Item label="Users" name="users">
             <UsersSelect
               mode="multiple"
@@ -60,7 +58,7 @@ export default forwardRef(function CreateRule(props, ref) {
           >
             <Radio.Button value="text">text</Radio.Button>
             <Radio.Button value="domain">domain</Radio.Button>
-            <Radio.Button value="receiver">receiver</Radio.Button>
+            <Radio.Button value="sender">sender</Radio.Button>
           </Radio.Group>
         </Form.Item>
         <Form.Item label="Secure Level" name="secureLevel">
@@ -74,12 +72,12 @@ export default forwardRef(function CreateRule(props, ref) {
             <Radio.Button value="trash">trash</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        {operationType === "receiver" && (
-          <Form.Item key="receiver" label="Receiver" name="receiver">
+        {operationType === "sender" && (
+          <Form.Item key="sender" label="Sender" name="sender">
             <UsersSelect
               onChange={(val) => {
-                setReceiverValue(val);
-                // 按receiver时，用户只有receiver 一个
+                setSenderValue(val);
+                // 按 sender 时，用户只有 sender 一个
                 setUsers([val]);
               }}
             />

@@ -6,8 +6,8 @@ import { SearchOutlined } from "@ant-design/icons";
 
 const options = [
   {
-    value: "receiver",
-    label: "Query by one receiver",
+    value: "sender",
+    label: "Query by one sender",
   },
   {
     value: "text",
@@ -48,9 +48,9 @@ export default function RuleFilter(props: {
           marginRight: 20,
         }}
       />
-      {queryType === "receiver" && (
+      {queryType === "sender" && (
         <UsersSelect
-          key="receiver"
+          key="sender"
           onChange={(val) => {
             setQueryValue(val);
           }}

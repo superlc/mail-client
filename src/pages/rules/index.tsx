@@ -13,16 +13,18 @@ import { useEffect, useRef, useState } from "react";
 import { createRule, deleteRule, getRules } from "../../app/apis";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useImmer } from "use-immer";
-import { BsTrash3 } from "react-icons/bs";
 import CreateRule from "./CreateRule";
 import RuleFilter from "./RuleFilter";
-import { current } from "@reduxjs/toolkit";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
 }
 
-const OperationTag = ({ operationType }: { operationType: OperationType }) => {
+const OperationTag = ({
+  operationType,
+}: {
+  operationType: "text" | "domain" | "sender";
+}) => {
   const text = operationType.toUpperCase();
   if (operationType === "text") return <Tag color="#2db7f5">{text}</Tag>;
   if (operationType === "domain") return <Tag color="#87d068">{text}</Tag>;
@@ -40,7 +42,7 @@ export default function Rules() {
       title: "Operation",
       dataIndex: "operation",
       width: "20%",
-      render: (operationType: OperationType) => {
+      render: (operationType: "text" | "domain" | "sender") => {
         return <OperationTag operationType={operationType} />;
       },
     },
@@ -90,7 +92,7 @@ export default function Rules() {
   const [tableParams, setTableParams] = useImmer<TableParams>({
     pagination: {
       current: 1,
-      pageSize: 3,
+      pageSize: 10,
     },
   });
   const [showDialogFlag, setShowDialogFlag] = useState(false);
@@ -143,7 +145,6 @@ export default function Rules() {
   };
 
   useEffect(() => {
-    console.log("-----------", tableParams);
     fetchRules();
   }, [tableParams.pagination?.current, tableParams.pagination?.pageSize]);
 
