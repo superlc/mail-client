@@ -1,0 +1,30 @@
+.downloads {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &-body {
+        flex: 1;
+        overflow: auto;
+        background-color: #f8f8f8;
+        padding: 32px;
+    }
+
+    &-main {
+        padding: 32px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+
+        &-header {
+            padding-bottom: 20px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+
+            &-filters {
+                flex: 1;
+            }
+        }
+    }
+}

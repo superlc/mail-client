@@ -47,3 +47,19 @@ export interface GetRulesParams {
     value?: string;
     secure_level?: SecureLevelType;
 }
+
+
+export type DownloadStatusType = 'doing' | 'done' | 'error';
+export interface DownloadType {
+    id: number;
+    created_at: string;
+    end_date: string;
+    updated_at: string;
+    email: string;
+    filename: string;
+    operation: OperationType;
+    start_date: string;
+    status: DownloadStatusType;
+    // operation value
+    value: string;
+}

@@ -1,4 +1,4 @@
-import { EmailType, GetRulesParams, OperationType, RuleType, SecureLevelType, UserType } from '../types';
+import { DownloadType, EmailType, GetRulesParams, OperationType, RuleType, SecureLevelType, UserType } from '../types';
 import request, { baseUrl } from '../utils/request';
 import { store } from './store';
 
@@ -149,4 +149,15 @@ export const deleteRule = (id: number) => {
         url: `rule/${id}`,
         method: 'delete'
     });
+};
+
+export const getDownloads = (limit: number, offset: number) => {
+    return request<{}, { downloads: DownloadType[] | null, total_count: number }>({
+        url: 'downloads',
+        method: 'get',
+        params: {
+            limit,
+            offset
+        },
+    })
 };

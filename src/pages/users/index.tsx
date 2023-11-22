@@ -6,7 +6,6 @@ import { ProviderType, UserType } from "../../types";
 import "./index.scss";
 import { useEffect, useState } from "react";
 import { getUsers, updateScan } from "../../app/apis";
-import { UserOutlined } from "@ant-design/icons";
 import { useImmer } from "use-immer";
 
 interface TableParams {
