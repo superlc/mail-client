@@ -151,7 +151,7 @@ export const deleteRule = (id: number) => {
     });
 };
 
-export const getDownloads = (limit: number, offset: number) => {
+export const getDownloads = (offset: number, limit: number) => {
     return request<{}, { downloads: DownloadType[] | null, total_count: number }>({
         url: 'downloads',
         method: 'get',
@@ -160,4 +160,23 @@ export const getDownloads = (limit: number, offset: number) => {
             offset
         },
     })
+};
+
+interface CreateDownloadTaskParams {
+    "end_date": string,
+    "operation": OperationType,
+    "start_date": string,
+    "value": string
+}
+
+export const createDownloadTask = (params: CreateDownloadTaskParams) => {
+    return request<CreateDownloadTaskParams>({
+        url: 'download',
+        method: 'post',
+        data: params
+    })
+};
+
+export const downloadEmailsFile = (id: number) => {
+    return downloadAjax(`${baseUrl}/download/file/${id}`);
 };
