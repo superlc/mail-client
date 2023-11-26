@@ -174,6 +174,9 @@ export default function Rules() {
                     }
                     fetchRules(fetchParams);
                   }}
+                  onClear={() => {
+                    fetchRules();
+                  }}
                 />
               </div>
               <div className="rules-main-header-actions">

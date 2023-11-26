@@ -37,6 +37,7 @@ export default function UsersSelect(
           .toLowerCase()
           .indexOf(inputValue.toLowerCase()) !== -1
       }
+      allowClear
     >
       {/* <Input onInput={onInput} allowClear /> */}
     </Select>

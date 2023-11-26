@@ -1,8 +1,8 @@
 import { Button, Input, Select } from "antd";
-import { forwardRef, useState } from "react";
-import UsersSelect from "../../components/users-select/UsersSelect";
+import { useState } from "react";
 import DomainsSelect from "../../components/domains-select/DomainsSelect";
 import { SearchOutlined } from "@ant-design/icons";
+import SenderSelect from "../../components/sender-select/SenderSelect";
 
 const options = [
   {
@@ -30,8 +30,9 @@ export default function RuleFilter(props: {
     queryType: QueryType | undefined,
     queryValue: string | undefined
   ) => void;
+  onClear: () => void;
 }) {
-  const { onClick } = props;
+  const { onClick, onClear } = props;
   const [queryType, setQueryType] = useState<QueryType | undefined>(undefined);
   const [queryValue, setQueryValue] = useState<string | undefined>(undefined);
 
@@ -42,14 +43,20 @@ export default function RuleFilter(props: {
         placeholder="Please select a query type"
         onChange={(val) => {
           setQueryType(val);
+          setQueryValue(undefined);
+
+          if (!val && typeof onClear === "function") {
+            onClear();
+          }
         }}
         style={{
           width: 200,
           marginRight: 20,
         }}
+        allowClear
       />
       {queryType === "sender" && (
-        <UsersSelect
+        <SenderSelect
           key="sender"
           onChange={(val) => {
             setQueryValue(val);
@@ -99,6 +106,7 @@ export default function RuleFilter(props: {
           style={{
             width: 200,
           }}
+          allowClear
         />
       )}
       {queryType && (
