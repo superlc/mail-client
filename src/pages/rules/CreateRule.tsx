@@ -2,16 +2,22 @@ import { Form, Input, Radio } from "antd";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import UsersSelect from "../../components/users-select/UsersSelect";
 import DomainsSelect from "../../components/domains-select/DomainsSelect";
-import { OperationType, SecureLevelType } from "../../types";
+import { SecureLevelType } from "../../types";
+import { useAppSelector } from "../../app/hooks";
+import SenderSelect from "../../components/sender-select/SenderSelect";
 
 export default forwardRef(function CreateRule(props, ref) {
+  const userInfo = useAppSelector((state) => state.user.data);
+
   const [operationType, setOperationType] = useState<
     "text" | "domain" | "sender" | undefined
   >(undefined);
   const [secureLevel, setSecureLevel] = useState<SecureLevelType | undefined>(
     undefined
   );
-  const [users, setUsers] = useState<string[]>([]);
+  const [users, setUsers] = useState<string[]>(
+    userInfo?.admin ? [] : [userInfo?.email!]
+  );
 
   const [textValue, setTextValue] = useState<string | undefined>(undefined);
   const [domainValue, setDomainValue] = useState<string | undefined>(undefined);
@@ -38,7 +44,7 @@ export default forwardRef(function CreateRule(props, ref) {
   return (
     <div className="create-rule">
       <Form layout="horizontal" labelCol={{ span: 6 }}>
-        {operationType !== "sender" && (
+        {operationType !== "sender" && userInfo?.admin && (
           <Form.Item label="Users" name="users">
             <UsersSelect
               mode="multiple"
@@ -74,7 +80,7 @@ export default forwardRef(function CreateRule(props, ref) {
         </Form.Item>
         {operationType === "sender" && (
           <Form.Item key="sender" label="Sender" name="sender">
-            <UsersSelect
+            <SenderSelect
               onChange={(val) => {
                 setSenderValue(val);
                 // 按 sender 时，用户只有 sender 一个

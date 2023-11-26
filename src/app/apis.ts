@@ -180,3 +180,17 @@ export const createDownloadTask = (params: CreateDownloadTaskParams) => {
 export const downloadEmailsFile = (id: number) => {
     return downloadAjax(`${baseUrl}/download/file/${id}`);
 };
+
+export const getSenders = () => {
+    return request<{}, {
+        senders: string[],
+        total_count: number,
+    }>({
+        url: 'senders',
+        method: 'get',
+        params: {
+            limit: -1,
+            offset: -1,
+        }
+    })
+};

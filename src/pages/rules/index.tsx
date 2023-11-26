@@ -47,6 +47,11 @@ export default function Rules() {
       },
     },
     {
+      title: "Value",
+      dataIndex: "value",
+      width: "20%",
+    },
+    {
       title: "Secure Level",
       dataIndex: "secure_level",
       width: "20%",
@@ -57,11 +62,6 @@ export default function Rules() {
           <Tag color="#faad14">TRASH</Tag>
         );
       },
-    },
-    {
-      title: "Value",
-      dataIndex: "value",
-      width: "20%",
     },
     {
       title: "Actions",

@@ -7,6 +7,7 @@ import "./index.scss";
 import { useEffect, useState } from "react";
 import { getUsers, updateScan } from "../../app/apis";
 import { useImmer } from "use-immer";
+import { useAppSelector } from "../../app/hooks";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -88,6 +89,8 @@ export default function Users() {
     },
   ];
 
+  const userInfo = useAppSelector((state) => state.user.data);
+
   const [users, setUsers] = useImmer<
     (UserType & {
       updatingScan?: boolean;
@@ -102,20 +105,24 @@ export default function Users() {
   });
 
   useEffect(() => {
-    setLoading(true);
-    getUsers(
-      tableParams.pagination?.current! - 1,
-      tableParams.pagination?.pageSize
-    )
-      .then((res) => {
-        setUsers(res.users || []);
-        setTableParams((params) => {
-          params.pagination!.total = res.total_count;
-        });
-      })
-      .catch((err) => message.error(err))
-      .finally(() => setLoading(false));
-  }, [JSON.stringify(tableParams)]);
+    if (userInfo?.admin) {
+      setLoading(true);
+      getUsers(
+        tableParams.pagination?.current! - 1,
+        tableParams.pagination?.pageSize
+      )
+        .then((res) => {
+          setUsers(res.users || []);
+          setTableParams((params) => {
+            params.pagination!.total = res.total_count;
+          });
+        })
+        .catch((err) => message.error(err))
+        .finally(() => setLoading(false));
+    } else {
+      setUsers([userInfo!]);
+    }
+  }, [tableParams.pagination?.current, tableParams.pagination?.pageSize]);
 
   return (
     <div className="users">
