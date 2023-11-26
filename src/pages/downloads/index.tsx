@@ -68,7 +68,7 @@ export default function Downloads() {
       },
     },
     {
-      title: "Operation Type",
+      title: "Operation",
       dataIndex: "operation",
       width: "10%",
       render: (operation: OperationType) => {
@@ -76,7 +76,7 @@ export default function Downloads() {
       },
     },
     {
-      title: "Operation Value",
+      title: "Value",
       dataIndex: "value",
       width: "20%",
     },
