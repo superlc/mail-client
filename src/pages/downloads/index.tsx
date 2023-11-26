@@ -32,6 +32,13 @@ interface TableParams {
   pagination?: TablePaginationConfig;
 }
 
+const OperationTag = ({ operationType }: { operationType: OperationType }) => {
+  const text = operationType.toUpperCase();
+  if (operationType === "text") return <Tag color="#2db7f5">{text}</Tag>;
+  if (operationType === "domain") return <Tag color="#87d068">{text}</Tag>;
+  return <Tag color="#108ee9">{text}</Tag>;
+};
+
 export default function Downloads() {
   const columns: ColumnsType<DownloadType> = [
     {
@@ -40,8 +47,36 @@ export default function Downloads() {
       width: "20%",
     },
     {
-      title: "File Name",
-      dataIndex: "filename",
+      title: "Date range",
+      dataIndex: "dateRange",
+      width: "20%",
+      render: (_, record) => {
+        const { start_date, end_date } = record;
+        return (
+          <>
+            <div className="downloads-date-range">
+              <span>From: </span>
+              {`${start_date}`}
+            </div>
+            <div className="downloads-date-range">
+              <span>To: </span>
+              {`${end_date}`}
+            </div>
+          </>
+        );
+      },
+    },
+    {
+      title: "Operation Type",
+      dataIndex: "operation",
+      width: "20%",
+      render: (operation: OperationType) => {
+        return <OperationTag operationType={operation} />;
+      },
+    },
+    {
+      title: "Operation Value",
+      dataIndex: "value",
       width: "20%",
     },
     {
