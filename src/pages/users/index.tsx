@@ -42,7 +42,7 @@ export default function Users() {
       },
     },
     {
-      title: "Scannable",
+      title: "Scan",
       dataIndex: "scan",
       width: "20%",
       render: (
