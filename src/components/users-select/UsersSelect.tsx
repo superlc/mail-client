@@ -1,4 +1,11 @@
-import { SelectProps, message, AutoComplete, Input, InputProps } from "antd";
+import {
+  SelectProps,
+  message,
+  AutoComplete,
+  Input,
+  InputProps,
+  Select,
+} from "antd";
 import { useEffect, useState } from "react";
 import { UserType } from "../../types";
 import { getUsers } from "../../app/apis";
@@ -17,7 +24,7 @@ export default function UsersSelect(
   }, []);
 
   return (
-    <AutoComplete
+    <Select
       {...restProps}
       options={users.map((u) => {
         return {
@@ -31,7 +38,7 @@ export default function UsersSelect(
           .indexOf(inputValue.toLowerCase()) !== -1
       }
     >
-      <Input onInput={onInput} allowClear />
-    </AutoComplete>
+      {/* <Input onInput={onInput} allowClear /> */}
+    </Select>
   );
 }
