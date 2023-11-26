@@ -29,6 +29,7 @@ export default function SenderSelect(
           .toLowerCase()
           .indexOf(inputValue.toLowerCase()) !== -1
       }
+      placeholder="Please select the sender"
     >
       <Input onInput={onInput} allowClear />
     </AutoComplete>

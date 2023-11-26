@@ -45,7 +45,11 @@ export default forwardRef(function CreateRule(props, ref) {
     <div className="create-rule">
       <Form layout="horizontal" labelCol={{ span: 6 }}>
         {operationType !== "sender" && userInfo?.admin && (
-          <Form.Item label="Users" name="users">
+          <Form.Item
+            label="Users"
+            name="users"
+            tooltip="No users selected means all users"
+          >
             <UsersSelect
               mode="multiple"
               onChange={(e) => {
@@ -54,7 +58,7 @@ export default forwardRef(function CreateRule(props, ref) {
             />
           </Form.Item>
         )}
-        <Form.Item label="Operation Type" name="operationType">
+        <Form.Item label="Operation Type" name="operationType" required>
           <Radio.Group
             value={operationType}
             onChange={(e) => {
@@ -67,7 +71,7 @@ export default forwardRef(function CreateRule(props, ref) {
             <Radio.Button value="sender">sender</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="Secure Level" name="secureLevel">
+        <Form.Item label="Secure Level" name="secureLevel" required>
           <Radio.Group
             value={secureLevel}
             onChange={(e) => {
@@ -79,7 +83,7 @@ export default forwardRef(function CreateRule(props, ref) {
           </Radio.Group>
         </Form.Item>
         {operationType === "sender" && (
-          <Form.Item key="sender" label="Sender" name="sender">
+          <Form.Item key="sender" label="Sender" name="sender" required>
             <SenderSelect
               onChange={(val) => {
                 setSenderValue(val);
@@ -90,7 +94,7 @@ export default forwardRef(function CreateRule(props, ref) {
           </Form.Item>
         )}
         {operationType === "domain" && (
-          <Form.Item key="domains" label="Domains" name="domains">
+          <Form.Item key="domains" label="Domains" name="domains" required>
             <DomainsSelect
               onChange={(d) => {
                 setDomainValue(d);
@@ -99,7 +103,7 @@ export default forwardRef(function CreateRule(props, ref) {
           </Form.Item>
         )}
         {operationType === "text" && (
-          <Form.Item key="text" label="Value" name="text">
+          <Form.Item key="text" label="Value" name="text" required>
             <Input
               placeholder="Please input text value"
               value={textValue}

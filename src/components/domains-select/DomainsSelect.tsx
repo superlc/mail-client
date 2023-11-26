@@ -27,6 +27,7 @@ export default function DomainsSelect(props: Omit<SelectProps, "options">) {
           .toLowerCase()
           .indexOf(inputValue.toLowerCase()) !== -1
       }
+      placeholder="Please select the domain"
     >
       <Input allowClear />
     </AutoComplete>
