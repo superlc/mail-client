@@ -50,7 +50,7 @@ export default function RuleFilter(props: {
           }
         }}
         style={{
-          width: 200,
+          width: 320,
           marginRight: 20,
         }}
         allowClear
@@ -62,7 +62,7 @@ export default function RuleFilter(props: {
             setQueryValue(val);
           }}
           style={{
-            width: 200,
+            width: 320,
           }}
         />
       )}
@@ -73,7 +73,7 @@ export default function RuleFilter(props: {
             setQueryValue(val);
           }}
           style={{
-            width: 200,
+            width: 320,
           }}
         />
       )}
@@ -93,7 +93,7 @@ export default function RuleFilter(props: {
             setQueryValue(val);
           }}
           style={{
-            width: 200,
+            width: 320,
           }}
         />
       )}
@@ -104,7 +104,7 @@ export default function RuleFilter(props: {
             setQueryValue(e.target.value);
           }}
           style={{
-            width: 200,
+            width: 320,
           }}
           allowClear
         />

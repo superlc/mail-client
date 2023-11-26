@@ -55,6 +55,9 @@ export default forwardRef(function CreateRule(props, ref) {
               onChange={(e) => {
                 setUsers(e);
               }}
+              style={{
+                width: 320,
+              }}
             />
           </Form.Item>
         )}
@@ -79,6 +82,9 @@ export default forwardRef(function CreateRule(props, ref) {
                 // 按 sender 时，用户只有 sender 一个
                 // setUsers([val]);
               }}
+              style={{
+                width: 320,
+              }}
             />
           </Form.Item>
         )}
@@ -87,6 +93,9 @@ export default forwardRef(function CreateRule(props, ref) {
             <DomainsSelect
               onChange={(d) => {
                 setDomainValue(d);
+              }}
+              style={{
+                width: 320,
               }}
             />
           </Form.Item>
@@ -98,6 +107,9 @@ export default forwardRef(function CreateRule(props, ref) {
               value={textValue}
               onChange={(e) => {
                 setTextValue(e.target.value);
+              }}
+              style={{
+                width: 320,
               }}
             />
           </Form.Item>
