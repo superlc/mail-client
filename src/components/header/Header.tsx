@@ -23,27 +23,51 @@ export default function PageHeader({
 
   return (
     <div className="page-header">
-      <div className="page-header-navs">
-        {navs.map((nav, index) => (
-          <a
-            key={index}
-            className={classNames("page-header-nav", {
-              active: current === nav,
-            })}
-            onClick={(e) => {
-              e.preventDefault();
+      {userInfo?.admin ? (
+        <div className="page-header-navs">
+          {navs.map((nav, index) => (
+            <a
+              key={index}
+              className={classNames("page-header-nav", {
+                active: current === nav,
+              })}
+              onClick={(e) => {
+                e.preventDefault();
 
-              if (current === nav) {
-                return;
-              }
+                if (current === nav) {
+                  return;
+                }
 
-              navigate(`/${nav}`);
-            }}
-          >
-            {`${nav[0].toUpperCase()}${nav.substring(1)}`}
-          </a>
-        ))}
-      </div>
+                navigate(`/${nav}`);
+              }}
+            >
+              {`${nav[0].toUpperCase()}${nav.substring(1)}`}
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div className="page-header-navs">
+          {navs.slice(1, 3).map((nav, index) => (
+            <a
+              key={index}
+              className={classNames("page-header-nav", {
+                active: current === nav,
+              })}
+              onClick={(e) => {
+                e.preventDefault();
+
+                if (current === nav) {
+                  return;
+                }
+
+                navigate(`/${nav}`);
+              }}
+            >
+              {`${nav[0].toUpperCase()}${nav.substring(1)}`}
+            </a>
+          ))}
+        </div>
+      )}
       <div className="page-header-center">{center}</div>
       <div className="page-header-logo">
         <UserOutlined />

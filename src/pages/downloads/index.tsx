@@ -214,7 +214,7 @@ export default function Downloads() {
                     setShowDialogFlag(true);
                   }}
                 >
-                  Create A New Downloading Task
+                  Create A New Task
                 </Button>
               </div>
             </div>

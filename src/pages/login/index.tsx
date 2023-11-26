@@ -11,7 +11,7 @@ import { setUserInfo } from "../../features/user/userSlice";
 import { useState } from "react";
 
 const googleLoginPath = process.env.REACT_APP_GOOG_LOGIN_PATH;
-const officeLoginPath = "";
+const officeLoginPath = process.env.REACT_APP_MSFT_LOGIN_PATH;
 
 export default function Login() {
   const dispath: AppDispatch = useAppDispatch();
