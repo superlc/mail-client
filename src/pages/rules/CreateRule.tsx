@@ -44,7 +44,7 @@ export default forwardRef(function CreateRule(props, ref) {
   return (
     <div className="create-rule">
       <Form layout="horizontal" labelCol={{ span: 6 }}>
-        {operationType !== "sender" && userInfo?.admin && (
+        {userInfo?.admin && (
           <Form.Item
             label="Users"
             name="users"
@@ -71,24 +71,13 @@ export default forwardRef(function CreateRule(props, ref) {
             <Radio.Button value="sender">sender</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="Secure Level" name="secureLevel" required>
-          <Radio.Group
-            value={secureLevel}
-            onChange={(e) => {
-              setSecureLevel(e.target.value);
-            }}
-          >
-            <Radio.Button value="delete">delete</Radio.Button>
-            <Radio.Button value="trash">trash</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
         {operationType === "sender" && (
           <Form.Item key="sender" label="Sender" name="sender" required>
             <SenderSelect
               onChange={(val) => {
                 setSenderValue(val);
                 // 按 sender 时，用户只有 sender 一个
-                setUsers([val]);
+                // setUsers([val]);
               }}
             />
           </Form.Item>
@@ -113,6 +102,17 @@ export default forwardRef(function CreateRule(props, ref) {
             />
           </Form.Item>
         )}
+        <Form.Item label="Secure Level" name="secureLevel" required>
+          <Radio.Group
+            value={secureLevel}
+            onChange={(e) => {
+              setSecureLevel(e.target.value);
+            }}
+          >
+            <Radio.Button value="delete">delete</Radio.Button>
+            <Radio.Button value="trash">trash</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
       </Form>
     </div>
   );
