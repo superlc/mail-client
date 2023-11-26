@@ -1,4 +1,4 @@
-import { Form, Input, Radio } from "antd";
+import { Form, Input, Radio, Switch } from "antd";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import UsersSelect from "../../components/users-select/UsersSelect";
 import DomainsSelect from "../../components/domains-select/DomainsSelect";
@@ -15,6 +15,7 @@ export default forwardRef(function CreateRule(props, ref) {
   const [secureLevel, setSecureLevel] = useState<SecureLevelType | undefined>(
     undefined
   );
+  const [selectAllUsersFlag, setSelectAllUsersFlag] = useState(false);
   const [users, setUsers] = useState<string[]>(
     userInfo?.admin ? [] : [userInfo?.email!]
   );
@@ -50,15 +51,36 @@ export default forwardRef(function CreateRule(props, ref) {
             name="users"
             tooltip="No users selected means all users"
           >
-            <UsersSelect
-              mode="multiple"
-              onChange={(e) => {
-                setUsers(e);
-              }}
+            <div
               style={{
-                width: 320,
+                display: "flex",
+                alignItems: "center",
               }}
-            />
+            >
+              <Switch
+                title="all users"
+                defaultChecked={selectAllUsersFlag}
+                onChange={(val) => {
+                  setSelectAllUsersFlag(val);
+                  if (val) {
+                    setUsers([]);
+                  }
+                }}
+                style={{
+                  marginRight: 20,
+                }}
+              />
+              <UsersSelect
+                mode="multiple"
+                onChange={(e) => {
+                  setUsers(e);
+                }}
+                style={{
+                  width: 320,
+                }}
+                disabled={selectAllUsersFlag}
+              />
+            </div>
           </Form.Item>
         )}
         <Form.Item label="Operation Type" name="operationType" required>
