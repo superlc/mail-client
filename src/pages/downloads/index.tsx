@@ -12,7 +12,7 @@ import {
 } from "antd";
 import PageHeader from "../../components/header/Header";
 import { useImmer } from "use-immer";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { DownloadStatusType, DownloadType, OperationType } from "../../types";
 import {
   createDownloadTask,

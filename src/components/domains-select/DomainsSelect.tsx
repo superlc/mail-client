@@ -1,4 +1,4 @@
-import { Select, SelectProps, message } from "antd";
+import { SelectProps, message, AutoComplete, Input } from "antd";
 import { useEffect, useState } from "react";
 import { getDomains } from "../../app/apis";
 
@@ -14,7 +14,7 @@ export default function DomainsSelect(props: Omit<SelectProps, "options">) {
   }, []);
 
   return (
-    <Select
+    <AutoComplete
       {...props}
       options={domains.map((d) => {
         return {
@@ -22,6 +22,13 @@ export default function DomainsSelect(props: Omit<SelectProps, "options">) {
           label: d,
         };
       })}
-    />
+      filterOption={(inputValue, option) =>
+        (option!.value as string)
+          .toLowerCase()
+          .indexOf(inputValue.toLowerCase()) !== -1
+      }
+    >
+      <Input allowClear />
+    </AutoComplete>
   );
 }
