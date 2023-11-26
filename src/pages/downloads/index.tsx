@@ -25,6 +25,7 @@ import "./index.scss";
 import UsersSelect from "../../components/users-select/UsersSelect";
 import DomainsSelect from "../../components/domains-select/DomainsSelect";
 import dayjs, { Dayjs } from "dayjs";
+import { DownloadOutlined, LoadingOutlined } from "@ant-design/icons";
 
 const { RangePicker } = DatePicker;
 
@@ -69,7 +70,7 @@ export default function Downloads() {
     {
       title: "Operation Type",
       dataIndex: "operation",
-      width: "20%",
+      width: "10%",
       render: (operation: OperationType) => {
         return <OperationTag operationType={operation} />;
       },
@@ -82,25 +83,41 @@ export default function Downloads() {
     {
       title: "Status",
       dataIndex: "status",
-      width: "20%",
+      width: "10%",
       render: (status: DownloadStatusType, record) => {
         return (
+          <Tag
+            icon={status === "doing" && <LoadingOutlined />}
+            color={
+              status === "error"
+                ? "#ff4d4f"
+                : status === "done"
+                ? "#0CBF5B"
+                : "#FF7800"
+            }
+          >
+            {status.toUpperCase()}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      render: (_, record) => {
+        return (
           <>
-            {status === "doing" ? (
-              <Button loading>Downloading</Button>
-            ) : status === "done" ? (
-              <Button
-                type="primary"
-                onClick={() => {
-                  const { id } = record;
-                  downloadEmailsFile(id);
-                }}
-              >
-                Download
-              </Button>
-            ) : (
-              <Tag color="#ff4d4f">{"Download error"}</Tag>
-            )}
+            <Button
+              type="primary"
+              icon={<DownloadOutlined />}
+              onClick={() => {
+                const { id } = record;
+                downloadEmailsFile(id);
+              }}
+              disabled={record.status !== "done"}
+            >
+              Download
+            </Button>
           </>
         );
       },
