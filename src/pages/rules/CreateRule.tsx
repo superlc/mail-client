@@ -1,10 +1,11 @@
-import { Form, Input, Radio, Switch } from "antd";
+import { Checkbox, Form, Input, Radio, Switch, Tooltip } from "antd";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import UsersSelect from "../../components/users-select/UsersSelect";
 import DomainsSelect from "../../components/domains-select/DomainsSelect";
 import { SecureLevelType } from "../../types";
 import { useAppSelector } from "../../app/hooks";
 import SenderSelect from "../../components/sender-select/SenderSelect";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 
 export default forwardRef(function CreateRule(props, ref) {
   const userInfo = useAppSelector((state) => state.user.data);
@@ -46,30 +47,13 @@ export default forwardRef(function CreateRule(props, ref) {
     <div className="create-rule">
       <Form layout="horizontal" labelCol={{ span: 6 }}>
         {userInfo?.admin && (
-          <Form.Item
-            label="Users"
-            name="users"
-            tooltip="No users selected means all users"
-          >
+          <Form.Item label="Users" name="users">
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
               }}
             >
-              <Switch
-                title="all users"
-                defaultChecked={selectAllUsersFlag}
-                onChange={(val) => {
-                  setSelectAllUsersFlag(val);
-                  if (val) {
-                    setUsers([]);
-                  }
-                }}
-                style={{
-                  marginRight: 20,
-                }}
-              />
               <UsersSelect
                 mode="multiple"
                 onChange={(e) => {
@@ -80,6 +64,26 @@ export default forwardRef(function CreateRule(props, ref) {
                 }}
                 disabled={selectAllUsersFlag}
               />
+              <Checkbox
+                title="all users"
+                defaultChecked={selectAllUsersFlag}
+                onChange={(e) => {
+                  const val = e.target.checked;
+                  setSelectAllUsersFlag(val);
+                  if (val) {
+                    setUsers([]);
+                  }
+                }}
+                style={{
+                  marginLeft: 20,
+                  width: 200,
+                }}
+              >
+                select all users
+                <Tooltip title="Checked means selecting all users and ignore the selected items">
+                  <QuestionCircleOutlined style={{ marginLeft: 10 }} />
+                </Tooltip>
+              </Checkbox>
             </div>
           </Form.Item>
         )}

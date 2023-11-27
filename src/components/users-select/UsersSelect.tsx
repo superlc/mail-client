@@ -5,6 +5,7 @@ import {
   Input,
   InputProps,
   Select,
+  Checkbox,
 } from "antd";
 import { useEffect, useState } from "react";
 import { UserType } from "../../types";
@@ -37,6 +38,14 @@ export default function UsersSelect(
           .toLowerCase()
           .indexOf(inputValue.toLowerCase()) !== -1
       }
+      // optionRender={(option, info) => {
+      //   console.log("---------", option, info);
+      //   return (
+      //     <div key={info.index}>
+      //       <Checkbox>{option.label}</Checkbox>
+      //     </div>
+      //   );
+      // }}
       allowClear
     >
       {/* <Input onInput={onInput} allowClear /> */}
