@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { message } from "antd";
+import { Empty, message } from "antd";
 import { connect } from "react-redux";
 
 import { getEmails } from "../../app/apis";
@@ -45,6 +45,8 @@ function HomeEmailList() {
           // show the first email by default
           if (res.emails.length > 0) {
             dispatchEmailDetail!({ type: "set", payload: res.emails[0] });
+          } else {
+            dispatchEmailDetail!({ type: "reset" });
           }
         })
         .catch((err) => {
@@ -69,12 +71,12 @@ function HomeEmailList() {
     <>
       <div className="home-email-list">
         <div className="home-email-list-body" ref={containerRef}>
-          {!!emails && (
+          {(emails || [])?.length > 0 ? (
             <InfiniteLoaderWrapper
               height={containerHeight}
-              hasNextPage={emails.length < totalCount}
+              hasNextPage={(emails || []).length < totalCount}
               isNextPageLoading={loadingMore}
-              items={emails}
+              items={emails || []}
               loadNextPage={(start: number, end: number) => {
                 if (!!operationValue) {
                   setLoadingMore(true);
@@ -98,6 +100,17 @@ function HomeEmailList() {
                 }
               }}
             />
+          ) : (
+            <div
+              style={{
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Empty />
+            </div>
           )}
         </div>
       </div>

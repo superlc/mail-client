@@ -48,7 +48,7 @@ EmailType) {
               items: [
                 {
                   key: "1",
-                  label: "Download this email",
+                  label: "Download",
                   icon: <DownloadOutlined />,
                   onClick: () => {
                     downloadEmail(id);

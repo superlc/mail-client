@@ -108,7 +108,6 @@ export default function Downloads() {
         return (
           <>
             <Button
-              type="primary"
               icon={<DownloadOutlined />}
               onClick={() => {
                 const { id } = record;
@@ -231,7 +230,7 @@ export default function Downloads() {
                     setShowDialogFlag(true);
                   }}
                 >
-                  Create A New Task
+                  New Task
                 </Button>
               </div>
             </div>
@@ -251,7 +250,7 @@ export default function Downloads() {
         </div>
       </div>
       <Modal
-        title="New Downloading Task"
+        title="New Task"
         open={showDialogFlag}
         onOk={handleOk}
         confirmLoading={confirmLoading}

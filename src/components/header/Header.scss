@@ -16,12 +16,27 @@ $borderColor: #ddd;
 
     &-logo {
         text-align: right;
+        display: flex;
+        align-items: center;
     }
 
     &-user-name {
         margin-left: 8px;
-        background-color: #f8f8f8;
         padding: 2px 4px;
+
+        &-arr {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 10px;
+
+            &:hover {
+                background-color: #f8f8f8;
+            }
+        }
     }
 
     &-nav {

@@ -4,7 +4,7 @@ import {
   setOperation,
   setOperationValue as setOperationValueOfStore,
 } from "../../../features/email/emailSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getDomains, getUsers } from "../../../app/apis";
 import { OperationType } from "../../../types";
 
@@ -23,38 +23,28 @@ export default function SearchFilter() {
   const [domains, setDomains] = useState<string[]>([]);
   const [receivers, setReceivers] = useState<string[]>([]);
 
+  const firstRender = useRef<boolean>(true);
+
   useEffect(() => {
-    if (operationType === "receiver") {
-      getUsers()
-        .then((res) => {
-          const { users = [] } = res;
-          setOperationValue(users[0].email);
-          setReceivers(users.map((user) => user.email));
-          dispatch(
-            setOperation({
-              operationType,
-              operationValue: users[0].email || defaultReceiver || "",
-            })
-          );
-        })
-        .catch((err) => message.error(err))
-        .finally(() => {});
-    }
-    if (operationType === "domain") {
-      getDomains()
-        .then((res) => {
-          const { domains = [] } = res;
-          setOperationValue(domains[0]);
-          setDomains(domains);
-          dispatch(
-            setOperation({
-              operationType,
-              operationValue: domains[0],
-            })
-          );
-        })
-        .catch((err) => message.error(err))
-        .finally(() => {});
+    if (!firstRender.current) {
+      if (operationType === "receiver") {
+      }
+      if (operationType === "domain") {
+        getDomains()
+          .then((res) => {
+            const { domains = [] } = res;
+            setOperationValue(domains[0]);
+            setDomains(domains);
+            dispatch(
+              setOperation({
+                operationType,
+                operationValue: domains[0],
+              })
+            );
+          })
+          .catch((err) => message.error(err))
+          .finally(() => {});
+      }
     }
   }, [operationType]);
 
@@ -66,7 +56,11 @@ export default function SearchFilter() {
         operationValue: defaultReceiver || "",
       })
     );
-  }, [defaultReceiver]);
+
+    return () => {
+      firstRender.current = false;
+    };
+  }, []);
 
   return (
     <>

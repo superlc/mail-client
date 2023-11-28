@@ -186,7 +186,7 @@ export default function Rules() {
                     setShowDialogFlag(true);
                   }}
                 >
-                  Create A New Rule
+                  New Rule
                 </Button>
               </div>
             </div>
