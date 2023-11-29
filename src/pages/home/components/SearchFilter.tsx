@@ -98,7 +98,7 @@ export default function SearchFilter() {
               key={"receiver"}
               value={receiver}
               onChange={(val) => {
-                setReceiver(receiver);
+                setReceiver(val);
                 dispatch(setOperationValueOfStore(val));
               }}
               style={{ width: 400, textAlign: "left" }}
