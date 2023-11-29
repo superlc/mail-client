@@ -212,7 +212,7 @@ export default function Rules() {
         onOk={handleOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
-        width={720}
+        width={780}
       >
         <CreateRule ref={formRef} />
       </Modal>

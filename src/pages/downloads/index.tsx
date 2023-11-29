@@ -12,7 +12,7 @@ import {
 } from "antd";
 import PageHeader from "../../components/header/Header";
 import { useImmer } from "use-immer";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useId, useState } from "react";
 import { DownloadStatusType, DownloadType, OperationType } from "../../types";
 import {
   createDownloadTask,
@@ -26,6 +26,7 @@ import UsersSelect from "../../components/users-select/UsersSelect";
 import DomainsSelect from "../../components/domains-select/DomainsSelect";
 import dayjs, { Dayjs } from "dayjs";
 import { DownloadOutlined, LoadingOutlined } from "@ant-design/icons";
+import { random } from "lodash";
 
 const { RangePicker } = DatePicker;
 
@@ -169,6 +170,17 @@ export default function Downloads() {
   const [startDate, setStartDate] = useState<Dayjs>(today.subtract(30, "d"));
   const [endDate, setEndDate] = useState<Dayjs>(dayjs());
 
+  const resetForm = useCallback(() => {
+    // reset date range
+    setStartDate(dayjs().subtract(30, "d"));
+    setStartDate(dayjs());
+
+    setOperationType(undefined);
+    setReceiverValue(undefined);
+    setTextValue(undefined);
+    setDomainValue(undefined);
+  }, []);
+
   const handleCancel = () => {
     setShowDialogFlag(false);
   };
@@ -273,6 +285,7 @@ export default function Downloads() {
                   setStartDate(sDate);
                   setEndDate(eDate);
                 }}
+                allowClear={false}
               />
             </Form.Item>
             <Form.Item label="Operation type" name="operationType">

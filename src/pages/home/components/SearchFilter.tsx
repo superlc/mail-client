@@ -1,12 +1,13 @@
-import { Input, Select, message } from "antd";
+import { Input, Select } from "antd";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   setOperation,
   setOperationValue as setOperationValueOfStore,
 } from "../../../features/email/emailSlice";
 import { useEffect, useRef, useState } from "react";
-import { getDomains, getUsers } from "../../../app/apis";
 import { OperationType } from "../../../types";
+import DomainsSelect from "../../../components/domains-select/DomainsSelect";
+import UsersSelect from "../../../components/users-select/UsersSelect";
 
 const Operations = ["text", "domain", "receiver"];
 
@@ -14,39 +15,31 @@ export default function SearchFilter() {
   // update operation state in this component
   const defaultReceiver = useAppSelector((state) => state.user.data?.email);
   const [operationType, setOperationType] = useState<OperationType>("receiver");
-  const [operationValue, setOperationValue] = useState<string>(
-    defaultReceiver || ""
-  );
+
+  const [domain, setDomain] = useState<string | undefined>(undefined);
+  const [receiver, setReceiver] = useState<string | undefined>(defaultReceiver);
+  // const [text, setText] = useState<string | undefined>(undefined);
 
   const dispatch = useAppDispatch();
 
-  const [domains, setDomains] = useState<string[]>([]);
-  const [receivers, setReceivers] = useState<string[]>([]);
-
-  const firstRender = useRef<boolean>(true);
-
   useEffect(() => {
-    if (!firstRender.current) {
-      if (operationType === "receiver") {
-      }
-      if (operationType === "domain") {
-        getDomains()
-          .then((res) => {
-            const { domains = [] } = res;
-            setOperationValue(domains[0]);
-            setDomains(domains);
-            dispatch(
-              setOperation({
-                operationType,
-                operationValue: domains[0],
-              })
-            );
-          })
-          .catch((err) => message.error(err))
-          .finally(() => {});
-      }
+    if (operationType === "domain" && !!domain) {
+      dispatch(
+        setOperation({
+          operationType,
+          operationValue: domain!,
+        })
+      );
     }
-  }, [operationType]);
+    if (operationType === "receiver" && !!receiver) {
+      dispatch(
+        setOperation({
+          operationType,
+          operationValue: receiver,
+        })
+      );
+    }
+  }, [domain, receiver]);
 
   useEffect(() => {
     // dispatch the operation update
@@ -56,10 +49,6 @@ export default function SearchFilter() {
         operationValue: defaultReceiver || "",
       })
     );
-
-    return () => {
-      firstRender.current = false;
-    };
   }, []);
 
   return (
@@ -93,15 +82,11 @@ export default function SearchFilter() {
             />
           )}
           {operationType === "domain" && (
-            <Select
+            <DomainsSelect
               key={"domain"}
-              value={operationValue || domains[0]}
-              options={domains.map((item) => ({
-                value: item,
-                label: item,
-              }))}
+              value={domain}
               onChange={(val) => {
-                setOperationValue(val);
+                setDomain(domain);
                 dispatch(setOperationValueOfStore(val));
               }}
               style={{ width: 400, textAlign: "left" }}
@@ -109,15 +94,11 @@ export default function SearchFilter() {
             />
           )}
           {operationType === "receiver" && (
-            <Select
+            <UsersSelect
               key={"receiver"}
-              value={operationValue || receivers[0]}
-              options={receivers.map((item) => ({
-                value: item,
-                label: item,
-              }))}
+              value={receiver}
               onChange={(val) => {
-                setOperationValue(val);
+                setReceiver(receiver);
                 dispatch(setOperationValueOfStore(val));
               }}
               style={{ width: 400, textAlign: "left" }}
