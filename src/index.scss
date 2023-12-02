@@ -11,6 +11,12 @@ html, body, #root {
   height: 100%;
 }
 
+.ant-modal-body {
+  padding-top: 20px;
+}
+.ant-form-item .ant-form-item-label {
+  text-align: start;
+}
 .ant-modal-footer .ant-btn {
   min-width: 80px;
 }

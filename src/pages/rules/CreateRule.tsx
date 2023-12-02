@@ -57,6 +57,16 @@ export default forwardRef(function CreateRule(props, ref) {
         {userInfo?.admin && (
           <Form.Item label="Users" name="users">
             <>
+              <UsersSelect
+                mode="multiple"
+                onChange={(e) => {
+                  setUsers(e);
+                }}
+                style={{
+                  width: 320,
+                }}
+                disabled={selectAllUsersFlag}
+              />
               <Checkbox
                 title="all users"
                 defaultChecked={selectAllUsersFlag}
@@ -70,26 +80,16 @@ export default forwardRef(function CreateRule(props, ref) {
                 className="checkbox-all-users"
                 style={{
                   display: "block",
-                  marginBottom: 20,
+                  marginTop: 10,
                   width: 200,
                 }}
               >
                 select all
               </Checkbox>
-              <UsersSelect
-                mode="multiple"
-                onChange={(e) => {
-                  setUsers(e);
-                }}
-                style={{
-                  width: 320,
-                }}
-                disabled={selectAllUsersFlag}
-              />
             </>
           </Form.Item>
         )}
-        <Form.Item label="Operation Type" name="operationType" required>
+        <Form.Item label="Operation" name="operationType">
           <Radio.Group
             value={operationType}
             onChange={(e) => {
@@ -103,7 +103,7 @@ export default forwardRef(function CreateRule(props, ref) {
           </Radio.Group>
         </Form.Item>
         {operationType === "sender" && (
-          <Form.Item key="sender" label="Sender" name="sender" required>
+          <Form.Item key="sender" label="Sender" name="sender">
             <SenderSelect
               onChange={(val) => {
                 setSenderValue(val);
@@ -117,7 +117,7 @@ export default forwardRef(function CreateRule(props, ref) {
           </Form.Item>
         )}
         {operationType === "domain" && (
-          <Form.Item key="domains" label="Domains" name="domains" required>
+          <Form.Item key="domains" label="Domains" name="domains">
             <DomainsSelect
               onChange={(d) => {
                 setDomainValue(d);
@@ -129,7 +129,7 @@ export default forwardRef(function CreateRule(props, ref) {
           </Form.Item>
         )}
         {operationType === "text" && (
-          <Form.Item key="text" label="Value" name="text" required>
+          <Form.Item key="text" label="Value" name="text">
             <Input
               placeholder="Please input text value"
               value={textValue}
@@ -142,7 +142,7 @@ export default forwardRef(function CreateRule(props, ref) {
             />
           </Form.Item>
         )}
-        <Form.Item label="Secure Level" name="secureLevel" required>
+        <Form.Item label="Secure Level" name="secureLevel">
           <Radio.Group
             value={secureLevel}
             onChange={(e) => {
