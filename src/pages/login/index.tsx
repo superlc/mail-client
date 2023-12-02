@@ -3,7 +3,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { setToken } from "../../features/token/tokenSlice";
 
-import "./index.css";
+import "./index.scss";
 import { useAppDispatch } from "../../app/hooks";
 import { AppDispatch } from "../../app/store";
 import { getUserInfo, login } from "../../app/apis";

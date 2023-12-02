@@ -5,8 +5,6 @@ import Login from "./pages/login";
 import Users from "./pages/users";
 import Downloads from "./pages/downloads";
 import PrivateRoute from "./components/PrivateRoute";
-
-import "react-loading-skeleton/dist/skeleton.css";
 import Rules from "./pages/rules";
 
 const router = createBrowserRouter([
