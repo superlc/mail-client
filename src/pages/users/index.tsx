@@ -1,4 +1,4 @@
-import { Switch, Table, Tag, message } from "antd";
+import { Button, Switch, Table, Tag, message } from "antd";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import PageHeader from "../../components/header/Header";
 import { ProviderType, UserType } from "../../types";
@@ -8,12 +8,14 @@ import { useEffect, useState } from "react";
 import { getUsers, updateScan } from "../../app/apis";
 import { useImmer } from "use-immer";
 import { useAppSelector } from "../../app/hooks";
+import { useNavigate } from "react-router-dom";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
 }
 
 export default function Users() {
+  const navigate = useNavigate();
   const columns: ColumnsType<
     UserType & {
       updatingScan?: boolean;
@@ -23,6 +25,24 @@ export default function Users() {
       title: "Email",
       dataIndex: "email",
       width: "20%",
+      render: (email: string) => {
+        return (
+          <Button
+            type="link"
+            onClick={() => {
+              navigate("/emails", {
+                state: {
+                  type: "receiver",
+                  value: email,
+                },
+              });
+            }}
+            className="email-link"
+          >
+            {email}
+          </Button>
+        );
+      },
     },
     {
       title: "Provider",

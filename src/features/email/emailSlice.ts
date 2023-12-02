@@ -5,11 +5,13 @@ import { EmailType, OperationType } from '../../types';
 interface SearchEmailState {
     operationType: OperationType;
     operationValue: string;
+    forceReload?: boolean;
 }
 
 const initialState: SearchEmailState = {
     operationType: 'receiver',
     operationValue: '',
+    forceReload: false,
 };
 
 const emailSlice = createSlice({
@@ -23,10 +25,13 @@ const emailSlice = createSlice({
         },
         setOperationValue: (state, action: PayloadAction<string>) => {
             state.operationValue = action.payload;
+        },
+        setForceReload: (state) => {
+            state.forceReload = !state.forceReload;
         }
     },
 });
 
-export const { setOperation, setOperationValue } = emailSlice.actions;
+export const { setOperation, setOperationValue, setForceReload } = emailSlice.actions;
 
 export default emailSlice.reducer;

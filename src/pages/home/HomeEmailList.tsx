@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Empty, message } from "antd";
+import { Empty, Spin, message } from "antd";
 import { connect } from "react-redux";
 
 import { getEmails } from "../../app/apis";
@@ -25,7 +25,7 @@ function HomeEmailList() {
   const [firstLoading, setFirstLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
 
-  const { operationType, operationValue } = useAppSelector(
+  const { operationType, operationValue, forceReload } = useAppSelector(
     (state) => state.email
   );
 
@@ -58,7 +58,7 @@ function HomeEmailList() {
     return () => {
       pageNumber.current = 0;
     };
-  }, [operationType, operationValue]);
+  }, [operationType, operationValue, forceReload]);
 
   useLayoutEffect(() => {
     if (containerRef.current) {
@@ -114,6 +114,7 @@ function HomeEmailList() {
           )}
         </div>
       </div>
+      <Spin spinning={firstLoading} fullscreen></Spin>
     </>
   );
 }

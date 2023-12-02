@@ -16,4 +16,10 @@
         border: 1px solid #ddd;
         border-radius: 4px;
     }
+
+    .email-link {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
