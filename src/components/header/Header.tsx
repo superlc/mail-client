@@ -54,7 +54,7 @@ export default function PageHeader({
         </div>
       ) : (
         <div className="page-header-navs">
-          {navs.slice(1, 3).map((nav, index) => (
+          {["users", "rules"].map((nav, index) => (
             <a
               key={index}
               className={classNames("page-header-nav", {

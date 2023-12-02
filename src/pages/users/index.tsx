@@ -16,6 +16,7 @@ interface TableParams {
 
 export default function Users() {
   const navigate = useNavigate();
+
   const columns: ColumnsType<
     UserType & {
       updatingScan?: boolean;
@@ -26,7 +27,7 @@ export default function Users() {
       dataIndex: "email",
       width: "20%",
       render: (email: string) => {
-        return (
+        return userInfo?.admin ? (
           <Button
             type="link"
             onClick={() => {
@@ -41,6 +42,8 @@ export default function Users() {
           >
             {email}
           </Button>
+        ) : (
+          <>{email}</>
         );
       },
     },
