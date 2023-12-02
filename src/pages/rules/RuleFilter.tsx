@@ -60,6 +60,9 @@ export default function RuleFilter(props: {
           key="sender"
           onChange={(val) => {
             setQueryValue(val);
+            if (typeof onClick === "function") {
+              onClick(queryType, val);
+            }
           }}
           style={{
             width: 320,
@@ -71,6 +74,9 @@ export default function RuleFilter(props: {
           key="domain"
           onChange={(val) => {
             setQueryValue(val);
+            if (typeof onClick === "function") {
+              onClick(queryType, val);
+            }
           }}
           style={{
             width: 320,
@@ -91,6 +97,9 @@ export default function RuleFilter(props: {
           ]}
           onChange={(val) => {
             setQueryValue(val);
+            if (typeof onClick === "function") {
+              onClick(queryType, val);
+            }
           }}
           style={{
             width: 320,
@@ -98,18 +107,25 @@ export default function RuleFilter(props: {
         />
       )}
       {queryType === "text" && (
-        <Input
+        <Input.Search
           placeholder="Please input rule text"
-          onChange={(e) => {
-            setQueryValue(e.target.value);
-          }}
+          // onChange={(e) => {
+          //   setQueryValue(e.target.value);
+          // }}
           style={{
             width: 320,
+          }}
+          onSearch={(val) => {
+            setQueryValue(val);
+
+            if (typeof onClick === "function") {
+              onClick(queryType, val);
+            }
           }}
           allowClear
         />
       )}
-      {queryType && (
+      {/* {queryType && (
         <Button
           icon={<SearchOutlined />}
           style={{ marginLeft: 20 }}
@@ -121,7 +137,7 @@ export default function RuleFilter(props: {
         >
           Query rules
         </Button>
-      )}
+      )} */}
     </>
   );
 }
