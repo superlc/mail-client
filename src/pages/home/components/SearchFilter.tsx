@@ -6,7 +6,7 @@ import {
   setForceReload,
   setOperationValue,
 } from "../../../features/email/emailSlice";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { OperationType } from "../../../types";
 import DomainsSelect from "../../../components/domains-select/DomainsSelect";
 import UsersSelect from "../../../components/users-select/UsersSelect";
@@ -21,49 +21,50 @@ export default function SearchFilter() {
   const location = useLocation();
 
   const [operationType, setOperationType] = useState<OperationType>(
-    location.state?.type
+    location.state?.type || "receiver"
   );
 
   const [domain, setDomain] = useState<string | undefined>(undefined);
-  const [receiver, setReceiver] = useState<string | undefined>(undefined);
+  const [receiver, setReceiver] = useState<string | undefined>(defaultReceiver);
   const [text, setText] = useState<string | undefined>(undefined);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (operationType === "domain" && !!domain) {
+    // when navigate this page with state: {type: '', value: ''}
+    const oType = location.state?.type as OperationType;
+    if (oType) {
+      setOperationType(location.state?.type);
+      const oVal = location.state?.value;
+      if (oType === "domain") {
+        setDomain(oVal);
+      } else if (oType === "text") {
+        setText(oVal);
+      } else {
+        setReceiver(oVal);
+      }
+
       dispatch(
         setOperation({
-          operationType,
-          operationValue: domain!,
+          operationType: oType,
+          operationValue: oVal,
         })
       );
     }
-    if (operationType === "receiver" && !!receiver) {
-      dispatch(
-        setOperation({
-          operationType,
-          operationValue: receiver,
-        })
-      );
-    }
-  }, [domain, receiver]);
+  }, [location.state?.type, location.state?.value]);
 
   useEffect(() => {
-    // dispatch the operation update
+    // set the state
+    setOperationType("receiver");
+    setReceiver(location.state?.value || defaultReceiver);
+
+    // trigger the dispatch when first render
     dispatch(
       setOperation({
-        operationType: location.state?.type || "receiver",
+        operationType: "receiver",
         operationValue: location.state?.value || defaultReceiver,
       })
     );
-  }, [location.state, defaultReceiver]);
-
-  useEffect(() => {
-    if (location.state?.value) {
-      setReceiver(location.state?.value);
-    }
-    setOperationType("receiver");
   }, []);
 
   return (

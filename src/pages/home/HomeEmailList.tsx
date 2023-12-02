@@ -17,7 +17,7 @@ function HomeEmailList() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [containerHeight, setContainerHeight] = useState(0);
 
-  const [emails, setEmails] = useState<EmailType[] | null>(null);
+  const [emails, setEmails] = useState<EmailType[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
 
   const dispatchEmailDetail = useEmailDispatch();
@@ -39,7 +39,7 @@ function HomeEmailList() {
         offset: 0,
       })
         .then((res) => {
-          setEmails(res.emails);
+          setEmails(res.emails || []);
           setTotalCount(res.total_count);
 
           // show the first email by default
@@ -71,10 +71,10 @@ function HomeEmailList() {
     <>
       <div className="home-email-list">
         <div className="home-email-list-body" ref={containerRef}>
-          {(emails || [])?.length > 0 ? (
+          {emails.length > 0 ? (
             <InfiniteLoaderWrapper
               height={containerHeight}
-              hasNextPage={(emails || []).length < totalCount}
+              hasNextPage={emails.length < totalCount}
               isNextPageLoading={loadingMore}
               items={emails || []}
               loadNextPage={(start: number, end: number) => {
