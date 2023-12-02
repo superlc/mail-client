@@ -63,94 +63,92 @@ export default function SearchFilter() {
     if (location.state?.value) {
       setReceiver(location.state?.value);
     }
+    setOperationType("receiver");
   }, []);
 
   return (
     <>
-      {!!operationType && (
-        <div className="search-filter">
-          <Select
-            value={operationType}
-            onChange={(val) => {
-              console.log("----------- ", val);
-              setOperationType(val);
+      <div className="search-filter">
+        <Select
+          value={operationType}
+          onChange={(val) => {
+            setOperationType(val);
 
-              if (val === "domain") {
-                setDomain(undefined);
-              } else if (val === "receiver") {
-                setReceiver(undefined);
-              } else {
-                setText(undefined);
-              }
+            if (val === "domain") {
+              setDomain(undefined);
+            } else if (val === "receiver") {
+              setReceiver(undefined);
+            } else {
+              setText(undefined);
+            }
 
+            dispatch(
+              setOperation({
+                operationType: val,
+                operationValue: "",
+              })
+            );
+          }}
+          options={Operations.map((item) => ({
+            value: item,
+            label: item,
+          }))}
+          style={{ width: 120, marginRight: 10, textAlign: "left" }}
+        />
+        {operationType === "text" && (
+          <Input.Search
+            placeholder="Please select the item"
+            style={{ width: 320 }}
+            onSearch={(val) => {
               dispatch(
                 setOperation({
-                  operationType: val,
-                  operationValue: "",
+                  operationType: "text",
+                  operationValue: val,
                 })
               );
             }}
-            options={Operations.map((item) => ({
-              value: item,
-              label: item,
-            }))}
-            style={{ width: 120, marginRight: 10, textAlign: "left" }}
+            value={text}
+            onChange={(e) => {
+              setText(e.target.value);
+              dispatch(setOperationValueOfStore(e.target.value));
+            }}
+            enterButton
           />
-          {operationType === "text" && (
-            <Input.Search
-              placeholder="Please select the item"
-              style={{ width: 320 }}
-              onSearch={(val) => {
-                dispatch(
-                  setOperation({
-                    operationType: "text",
-                    operationValue: val,
-                  })
-                );
-              }}
-              value={text}
-              onChange={(e) => {
-                setText(e.target.value);
-                dispatch(setOperationValueOfStore(e.target.value));
-              }}
-              enterButton
-            />
-          )}
-          {operationType === "domain" && (
-            <DomainsSelect
-              key={"domain"}
-              value={domain}
-              onChange={(val) => {
-                setDomain(domain);
-                dispatch(setOperationValueOfStore(val));
-              }}
-              style={{ width: 320, textAlign: "left" }}
-              showSearch
-            />
-          )}
-          {operationType === "receiver" && (
-            <UsersSelect
-              key={"receiver"}
-              value={receiver}
-              onChange={(val) => {
-                setReceiver(val);
-                dispatch(setOperationValueOfStore(val));
-              }}
-              style={{ width: 320, textAlign: "left" }}
-              showSearch
-            />
-          )}
-          <Tooltip title="Reload emails">
-            <Button
-              icon={<ReloadOutlined />}
-              style={{ marginLeft: 10 }}
-              onClick={() => {
-                dispatch(setForceReload());
-              }}
-            />
-          </Tooltip>
-        </div>
-      )}
+        )}
+        {operationType === "domain" && (
+          <DomainsSelect
+            key={"domain"}
+            value={domain}
+            onChange={(val) => {
+              setDomain(domain);
+              dispatch(setOperationValueOfStore(val));
+            }}
+            style={{ width: 320, textAlign: "left" }}
+            showSearch
+          />
+        )}
+        {operationType === "receiver" && (
+          <UsersSelect
+            key={"receiver"}
+            value={receiver}
+            onChange={(val) => {
+              setReceiver(val);
+              dispatch(setOperationValueOfStore(val));
+            }}
+            style={{ width: 320, textAlign: "left" }}
+            showSearch
+          />
+        )}
+        <Tooltip title="Reload emails">
+          <Button
+            icon={<ReloadOutlined />}
+            style={{ marginLeft: 10 }}
+            onClick={() => {
+              dispatch(setForceReload());
+            }}
+          />
+        </Tooltip>
+      </div>
     </>
   );
 }
