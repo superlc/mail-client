@@ -56,22 +56,7 @@ export default forwardRef(function CreateRule(props, ref) {
       <Form layout="horizontal" labelCol={{ span: 6 }} ref={formRef}>
         {userInfo?.admin && (
           <Form.Item label="Users" name="users">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <UsersSelect
-                mode="multiple"
-                onChange={(e) => {
-                  setUsers(e);
-                }}
-                style={{
-                  width: 320,
-                }}
-                disabled={selectAllUsersFlag}
-              />
+            <>
               <Checkbox
                 title="all users"
                 defaultChecked={selectAllUsersFlag}
@@ -82,17 +67,26 @@ export default forwardRef(function CreateRule(props, ref) {
                     setUsers([]);
                   }
                 }}
+                className="checkbox-all-users"
                 style={{
-                  marginLeft: 20,
+                  display: "block",
+                  marginBottom: 20,
                   width: 200,
                 }}
               >
-                select all users
-                <Tooltip title="Checked means selecting all users and ignore the selected items">
-                  <QuestionCircleOutlined style={{ marginLeft: 10 }} />
-                </Tooltip>
+                select all
               </Checkbox>
-            </div>
+              <UsersSelect
+                mode="multiple"
+                onChange={(e) => {
+                  setUsers(e);
+                }}
+                style={{
+                  width: 320,
+                }}
+                disabled={selectAllUsersFlag}
+              />
+            </>
           </Form.Item>
         )}
         <Form.Item label="Operation Type" name="operationType" required>

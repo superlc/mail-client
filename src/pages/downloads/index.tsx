@@ -267,7 +267,7 @@ export default function Downloads() {
         onOk={handleOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
-        width={720}
+        width={582}
       >
         <div className="download-task">
           <Form layout="horizontal" labelCol={{ span: 6 }} ref={formRef}>
@@ -286,6 +286,9 @@ export default function Downloads() {
                   setEndDate(eDate);
                 }}
                 allowClear={false}
+                style={{
+                  width: 400,
+                }}
               />
             </Form.Item>
             <Form.Item label="Operation type" name="operationType">
@@ -307,6 +310,9 @@ export default function Downloads() {
                   onChange={(val) => {
                     setReceiverValue(val);
                   }}
+                  style={{
+                    width: 400,
+                  }}
                 />
               </Form.Item>
             )}
@@ -315,6 +321,9 @@ export default function Downloads() {
                 <DomainsSelect
                   onChange={(d) => {
                     setDomainValue(d);
+                  }}
+                  style={{
+                    width: 400,
                   }}
                 />
               </Form.Item>
@@ -326,6 +335,9 @@ export default function Downloads() {
                   value={textValue}
                   onChange={(e) => {
                     setTextValue(e.target.value);
+                  }}
+                  style={{
+                    width: 400,
                   }}
                 />
               </Form.Item>
