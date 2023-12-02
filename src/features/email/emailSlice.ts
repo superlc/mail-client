@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EmailType, OperationType } from '../../types';
 
 
-interface SearchEmailState {
+export interface SearchEmailState {
     operationType: OperationType;
     operationValue: string;
     forceReload?: boolean;

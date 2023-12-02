@@ -26,26 +26,26 @@ export default function Users() {
       title: "Email",
       dataIndex: "email",
       width: "20%",
-      render: (email: string) => {
-        return userInfo?.admin ? (
-          <Button
-            type="link"
-            onClick={() => {
-              navigate("/emails", {
-                state: {
-                  type: "receiver",
-                  value: email,
-                },
-              });
-            }}
-            className="email-link"
-          >
-            {email}
-          </Button>
-        ) : (
-          <>{email}</>
-        );
-      },
+      // render: (email: string) => {
+      //   return userInfo?.admin ? (
+      //     <Button
+      //       type="link"
+      //       onClick={() => {
+      //         navigate("/emails", {
+      //           state: {
+      //             type: "receiver",
+      //             value: email,
+      //           },
+      //         });
+      //       }}
+      //       className="email-link"
+      //     >
+      //       {email}
+      //     </Button>
+      //   ) : (
+      //     <>{email}</>
+      //   );
+      // },
     },
     {
       title: "Provider",

@@ -3,16 +3,20 @@ import { Empty, Spin, message } from "antd";
 import { connect } from "react-redux";
 
 import { getEmails } from "../../app/apis";
-import { useAppSelector } from "../../app/hooks";
 
 import { EmailType } from "../../types";
 import { useEmailDispatch } from "./HomeProvider";
 import InfiniteLoaderWrapper from "./InfiniteLoaderWrapper";
 import { RootState } from "../../app/store";
+import { SearchEmailState } from "../../features/email/emailSlice";
 
 const pageSize = 20;
 
-function HomeEmailList() {
+function HomeEmailList({
+  operationType,
+  operationValue,
+  forceReload,
+}: SearchEmailState) {
   const pageNumber = useRef(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [containerHeight, setContainerHeight] = useState(0);
@@ -24,10 +28,6 @@ function HomeEmailList() {
 
   const [firstLoading, setFirstLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
-
-  const { operationType, operationValue, forceReload } = useAppSelector(
-    (state) => state.email
-  );
 
   useEffect(() => {
     if (!!operationValue) {
@@ -119,4 +119,4 @@ function HomeEmailList() {
   );
 }
 
-export default connect((state: RootState) => state)(HomeEmailList);
+export default connect((state: RootState) => state.email)(HomeEmailList);
