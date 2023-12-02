@@ -291,7 +291,7 @@ export default function Downloads() {
                 }}
               />
             </Form.Item>
-            <Form.Item label="Operation type" name="operationType">
+            <Form.Item label="Operation" name="operationType">
               <Radio.Group
                 value={operationType}
                 onChange={(e) => {
