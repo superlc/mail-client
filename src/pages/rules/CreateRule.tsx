@@ -1,5 +1,5 @@
 import { Checkbox, Form, Input, Radio, Switch, Tooltip } from "antd";
-import { forwardRef, useImperativeHandle, useState } from "react";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import UsersSelect from "../../components/users-select/UsersSelect";
 import DomainsSelect from "../../components/domains-select/DomainsSelect";
 import { SecureLevelType } from "../../types";
@@ -25,6 +25,8 @@ export default forwardRef(function CreateRule(props, ref) {
   const [domainValue, setDomainValue] = useState<string | undefined>(undefined);
   const [senderValue, setSenderValue] = useState<string | undefined>(undefined);
 
+  const formRef = useRef(null);
+
   useImperativeHandle(ref, () => {
     return {
       getCreateParams: () => {
@@ -40,12 +42,18 @@ export default forwardRef(function CreateRule(props, ref) {
               : senderValue,
         };
       },
+      reset: () => {
+        if (formRef.current) {
+          // @ts-ignore
+          formRef.current.resetFields();
+        }
+      },
     };
   });
 
   return (
     <div className="create-rule">
-      <Form layout="horizontal" labelCol={{ span: 6 }}>
+      <Form layout="horizontal" labelCol={{ span: 6 }} ref={formRef}>
         {userInfo?.admin && (
           <Form.Item label="Users" name="users">
             <div

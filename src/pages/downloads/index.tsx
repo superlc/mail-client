@@ -12,7 +12,7 @@ import {
 } from "antd";
 import PageHeader from "../../components/header/Header";
 import { useImmer } from "use-immer";
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { DownloadStatusType, DownloadType, OperationType } from "../../types";
 import {
   createDownloadTask,
@@ -170,19 +170,19 @@ export default function Downloads() {
   const [startDate, setStartDate] = useState<Dayjs>(today.subtract(30, "d"));
   const [endDate, setEndDate] = useState<Dayjs>(dayjs());
 
+  const formRef = useRef(null);
+
   const resetForm = useCallback(() => {
+    // @ts-ignore
+    formRef.current.resetFields();
     // reset date range
     setStartDate(dayjs().subtract(30, "d"));
     setStartDate(dayjs());
-
-    setOperationType(undefined);
-    setReceiverValue(undefined);
-    setTextValue(undefined);
-    setDomainValue(undefined);
   }, []);
 
   const handleCancel = () => {
     setShowDialogFlag(false);
+    resetForm();
   };
 
   const handleOk = () => {
@@ -270,7 +270,7 @@ export default function Downloads() {
         width={720}
       >
         <div className="download-task">
-          <Form layout="horizontal" labelCol={{ span: 6 }}>
+          <Form layout="horizontal" labelCol={{ span: 6 }} ref={formRef}>
             <Form.Item label="Pick date range" name="dateRange">
               <RangePicker
                 defaultValue={[startDate, endDate]}

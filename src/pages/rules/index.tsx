@@ -136,12 +136,16 @@ export default function Rules() {
       .then((res) => {
         fetchRules();
         setShowDialogFlag(false);
+        // @ts-ignore
+        formRef.current.reset();
       })
       .catch((err) => message.error(err))
       .finally(() => setConfirmLoading(false));
   };
   const handleCancel = () => {
     setShowDialogFlag(false);
+    // @ts-ignore
+    formRef.current.reset();
   };
 
   useEffect(() => {
