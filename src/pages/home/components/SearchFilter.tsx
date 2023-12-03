@@ -25,64 +25,55 @@ export default function SearchFilter() {
   );
 
   const [domain, setDomain] = useState<string | undefined>(undefined);
-  const [receiver, setReceiver] = useState<string | undefined>(defaultReceiver);
+  const [receiver, setReceiver] = useState<string | undefined>(undefined);
   const [text, setText] = useState<string | undefined>(undefined);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     // when navigate this page with state: {type: '', value: ''}
-    const oType = location.state?.type as OperationType;
-    if (oType) {
-      setOperationType(location.state?.type);
-      const oVal = location.state?.value;
-      if (oType === "domain") {
-        setDomain(oVal);
-      } else if (oType === "text") {
-        setText(oVal);
-      } else {
-        setReceiver(oVal);
-      }
+    const oType = (location.state?.type as OperationType) || "receiver";
 
-      dispatch(
-        setOperation({
-          operationType: oType,
-          operationValue: oVal,
-        })
-      );
+    setOperationType(location.state?.type || "receiver");
+
+    const oVal = location.state?.value || defaultReceiver;
+
+    if (oType === "domain") {
+      setDomain(oVal);
+    } else if (oType === "text") {
+      setText(oVal);
+    } else {
+      setReceiver(oVal);
     }
-  }, [location.state?.type, location.state?.value]);
 
-  useEffect(() => {
-    // set the state
-    setOperationType("receiver");
-    setReceiver(location.state?.value || defaultReceiver);
-
-    // trigger the dispatch when first render
     dispatch(
       setOperation({
-        operationType: "receiver",
-        operationValue: location.state?.value || defaultReceiver,
+        operationType: oType,
+        operationValue: oVal,
       })
     );
-  }, []);
+
+    return () => {
+      dispatch(setOperationValueOfStore(""));
+    };
+  }, [location.state?.type, location.state?.value]);
 
   return (
     <>
       <div className="search-filter">
         <Select
           value={operationType}
-          onChange={(val) => {
+          onSelect={(val) => {
             setOperationType(val);
 
             if (val === "domain") {
               setDomain(undefined);
-            } else if (val === "receiver") {
-              setReceiver(undefined);
-            } else {
+            } else if (val === "text") {
               setText(undefined);
+            } else {
+              setReceiver(undefined);
             }
-
+            // trigger setting operation when navigate to this page
             dispatch(
               setOperation({
                 operationType: val,
@@ -111,7 +102,6 @@ export default function SearchFilter() {
             value={text}
             onChange={(e) => {
               setText(e.target.value);
-              // dispatch(setOperationValueOfStore(e.target.value));
             }}
             enterButton
           />
@@ -120,7 +110,7 @@ export default function SearchFilter() {
           <DomainsSelect
             key={"domain"}
             value={domain}
-            onChange={(val) => {
+            onSelect={(val) => {
               setDomain(domain);
               dispatch(setOperationValueOfStore(val));
             }}
@@ -132,7 +122,7 @@ export default function SearchFilter() {
           <UsersSelect
             key={"receiver"}
             value={receiver}
-            onChange={(val) => {
+            onSelect={(val) => {
               setReceiver(val);
               dispatch(setOperationValueOfStore(val));
             }}

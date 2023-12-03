@@ -65,7 +65,7 @@ function HomeEmailList({
       const boundingRect = containerRef.current.getBoundingClientRect();
       setContainerHeight(boundingRect.height);
     }
-  }, []);
+  }, [containerRef.current]);
 
   return (
     <>
