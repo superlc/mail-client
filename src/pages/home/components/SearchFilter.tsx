@@ -111,7 +111,7 @@ export default function SearchFilter() {
             value={text}
             onChange={(e) => {
               setText(e.target.value);
-              dispatch(setOperationValueOfStore(e.target.value));
+              // dispatch(setOperationValueOfStore(e.target.value));
             }}
             enterButton
           />
