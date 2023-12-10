@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 
 import Home from "./pages/home";
 import Login from "./pages/login";
@@ -7,7 +7,7 @@ import Downloads from "./pages/downloads";
 import PrivateRoute from "./components/PrivateRoute";
 import Rules from "./pages/rules";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: (
