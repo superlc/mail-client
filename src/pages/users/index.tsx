@@ -1,4 +1,4 @@
-import { Button, Switch, Table, Tag, message } from "antd";
+import { Button, Modal, Switch, Table, Tag, message } from "antd";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import PageHeader from "../../components/header/Header";
 import { ProviderType, UserType } from "../../types";
@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { getUsers, updateScan } from "../../app/apis";
 import { useImmer } from "use-immer";
 import { useAppSelector } from "../../app/hooks";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -147,27 +147,48 @@ export default function Users() {
     }
   }, [tableParams.pagination?.current, tableParams.pagination?.pageSize]);
 
+  const location = useLocation();
+  console.log(location.state);
+  const [showGuideFlag, setShowGuideFlag] = useState(
+    !!location.state.isNewUser
+  );
+
   return (
-    <div className="users">
-      <div className="users-header">
-        <PageHeader current="users" />
-      </div>
-      <div className="users-body">
-        <div className="users-main">
-          <Table
-            columns={columns}
-            loading={loading}
-            dataSource={users}
-            rowKey={(r) => r.id}
-            pagination={tableParams.pagination}
-            onChange={(pagination: TablePaginationConfig) => {
-              setTableParams((params) => {
-                params.pagination = { ...pagination };
-              });
-            }}
-          />
+    <>
+      <div className="users">
+        <div className="users-header">
+          <PageHeader current="users" />
+        </div>
+        <div className="users-body">
+          <div className="users-main">
+            <Table
+              columns={columns}
+              loading={loading}
+              dataSource={users}
+              rowKey={(r) => r.id}
+              pagination={tableParams.pagination}
+              onChange={(pagination: TablePaginationConfig) => {
+                setTableParams((params) => {
+                  params.pagination = { ...pagination };
+                });
+              }}
+            />
+          </div>
         </div>
       </div>
-    </div>
+      <Modal
+        open={showGuideFlag}
+        onOk={() => setShowGuideFlag(false)}
+        onCancel={() => setShowGuideFlag(false)}
+        width={1000}
+      >
+        <iframe
+          src={location.state.innerUrl}
+          frameBorder={0}
+          width="100%"
+          height="600px"
+        />
+      </Modal>
+    </>
   );
 }

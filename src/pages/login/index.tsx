@@ -18,6 +18,8 @@ export default function Login() {
   const navigate = useNavigate();
   const [searchParasm] = useSearchParams();
   const token = searchParasm.get("token");
+  const newUser = searchParasm.get("newcomer");
+  const newUserUrl = searchParasm.get("inner");
 
   const [logining, setLogining] = useState(false);
 
@@ -28,7 +30,13 @@ export default function Login() {
       .then((userInfo) => {
         dispath(setUserInfo(userInfo));
         setLogining(false);
-        navigate("/", { replace: true });
+        navigate("/", {
+          replace: true,
+          state: {
+            isNewUser: newUser,
+            innerUrl: newUserUrl,
+          },
+        });
       })
       .catch((err) => {
         console.error(err);
