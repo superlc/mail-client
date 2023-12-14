@@ -181,6 +181,7 @@ export default function Users() {
         onOk={() => setShowGuideFlag(false)}
         onCancel={() => setShowGuideFlag(false)}
         width={1000}
+        footer={null}
       >
         <iframe
           src={location.state?.innerUrl}
