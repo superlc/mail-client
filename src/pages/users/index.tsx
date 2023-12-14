@@ -150,7 +150,7 @@ export default function Users() {
   const location = useLocation();
   console.log(location.state);
   const [showGuideFlag, setShowGuideFlag] = useState(
-    !!location.state.isNewUser
+    !!location.state?.isNewUser
   );
 
   return (
@@ -183,7 +183,7 @@ export default function Users() {
         width={1000}
       >
         <iframe
-          src={location.state.innerUrl}
+          src={location.state?.innerUrl}
           frameBorder={0}
           width="100%"
           height="600px"
